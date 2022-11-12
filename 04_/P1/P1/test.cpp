@@ -1,6 +1,6 @@
 ﻿#include<iostream>
 #include"Persion.pb.h"
-
+using namespace itcast;
 
 //using namespace std;
 
@@ -23,7 +23,7 @@ using std::string;
     p.set_sex("man");
     p.set_age(17);
     p.set_color(Blue);
-    Info *info = p.mutable_info();
+    itheima::Persion *info = p.mutable_info();
 	  info->set_addr("新日暮里");
     info->set_number(900);
 
@@ -41,7 +41,7 @@ using std::string;
    pp.ParseFromString(output);
 
    //解析后数据在pp
-   Info ii = pp.info();
+   itheima::Persion ii = pp.info();
    cout<<"id "<<pp.id()<<endl;
    //cout<<"name "<<pp.name()<<endl;
    cout<<"name0 =  "<<pp.name(0)<<endl;

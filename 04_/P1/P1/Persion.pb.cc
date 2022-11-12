@@ -15,25 +15,27 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
-extern PROTOBUF_INTERNAL_EXPORT_info_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Info_info_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_info_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Persion_info_2eproto;
+namespace itcast {
 class PersionDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<Persion> _instance;
 } _Persion_default_instance_;
+}  // namespace itcast
 static void InitDefaultsscc_info_Persion_Persion_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::_Persion_default_instance_;
-    new (ptr) ::Persion();
+    void* ptr = &::itcast::_Persion_default_instance_;
+    new (ptr) ::itcast::Persion();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::Persion::InitAsDefaultInstance();
+  ::itcast::Persion::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_Persion_Persion_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsscc_info_Persion_Persion_2eproto}, {
-      &scc_info_Info_info_2eproto.base,}};
+      &scc_info_Persion_info_2eproto.base,}};
 
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Persion_2eproto[1];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_Persion_2eproto[1];
@@ -41,31 +43,32 @@ static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_s
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Persion_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::Persion, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::itcast::Persion, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::Persion, id_),
-  PROTOBUF_FIELD_OFFSET(::Persion, name_),
-  PROTOBUF_FIELD_OFFSET(::Persion, sex_),
-  PROTOBUF_FIELD_OFFSET(::Persion, age_),
-  PROTOBUF_FIELD_OFFSET(::Persion, color_),
-  PROTOBUF_FIELD_OFFSET(::Persion, info_),
+  PROTOBUF_FIELD_OFFSET(::itcast::Persion, id_),
+  PROTOBUF_FIELD_OFFSET(::itcast::Persion, name_),
+  PROTOBUF_FIELD_OFFSET(::itcast::Persion, sex_),
+  PROTOBUF_FIELD_OFFSET(::itcast::Persion, age_),
+  PROTOBUF_FIELD_OFFSET(::itcast::Persion, color_),
+  PROTOBUF_FIELD_OFFSET(::itcast::Persion, info_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, sizeof(::Persion)},
+  { 0, -1, sizeof(::itcast::Persion)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_Persion_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::itcast::_Persion_default_instance_),
 };
 
 const char descriptor_table_protodef_Persion_2eproto[] =
-  "\n\rPersion.proto\032\ninfo.proto\"i\n\007Persion\022\n"
-  "\n\002id\030\001 \001(\005\022\014\n\004name\030\002 \003(\014\022\013\n\003sex\030\003 \001(\t\022\013\n"
-  "\003age\030\004 \001(\005\022\025\n\005color\030\005 \001(\0162\006.Color\022\023\n\004inf"
-  "o\030\006 \001(\0132\005.Info*%\n\005Color\022\007\n\003Red\020\000\022\t\n\005Gree"
-  "n\020\006\022\010\n\004Blue\020\tb\006proto3"
+  "\n\rPersion.proto\022\006itcast\032\ninfo.proto\"{\n\007P"
+  "ersion\022\n\n\002id\030\001 \001(\005\022\014\n\004name\030\002 \003(\014\022\013\n\003sex\030"
+  "\003 \001(\t\022\013\n\003age\030\004 \001(\005\022\034\n\005color\030\005 \001(\0162\r.itca"
+  "st.Color\022\036\n\004info\030\006 \001(\0132\020.itheima.Persion"
+  "*%\n\005Color\022\007\n\003Red\020\000\022\t\n\005Green\020\006\022\010\n\004Blue\020\tb"
+  "\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Persion_2eproto_deps[1] = {
   &::descriptor_table_info_2eproto,
@@ -76,7 +79,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Per
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Persion_2eproto_once;
 static bool descriptor_table_Persion_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Persion_2eproto = {
-  &descriptor_table_Persion_2eproto_initialized, descriptor_table_protodef_Persion_2eproto, "Persion.proto", 181,
+  &descriptor_table_Persion_2eproto_initialized, descriptor_table_protodef_Persion_2eproto, "Persion.proto", 207,
   &descriptor_table_Persion_2eproto_once, descriptor_table_Persion_2eproto_sccs, descriptor_table_Persion_2eproto_deps, 1, 1,
   schemas, file_default_instances, TableStruct_Persion_2eproto::offsets,
   file_level_metadata_Persion_2eproto, 1, file_level_enum_descriptors_Persion_2eproto, file_level_service_descriptors_Persion_2eproto,
@@ -84,6 +87,7 @@ const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Persio
 
 // Force running AddDescriptors() at dynamic initialization time.
 static bool dynamic_init_dummy_Persion_2eproto = (  ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_Persion_2eproto), true);
+namespace itcast {
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Color_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Persion_2eproto);
   return file_level_enum_descriptors_Persion_2eproto[0];
@@ -103,15 +107,15 @@ bool Color_IsValid(int value) {
 // ===================================================================
 
 void Persion::InitAsDefaultInstance() {
-  ::_Persion_default_instance_._instance.get_mutable()->info_ = const_cast< ::Info*>(
-      ::Info::internal_default_instance());
+  ::itcast::_Persion_default_instance_._instance.get_mutable()->info_ = const_cast< ::itheima::Persion*>(
+      ::itheima::Persion::internal_default_instance());
 }
 class Persion::HasBitSetters {
  public:
-  static const ::Info& info(const Persion* msg);
+  static const ::itheima::Persion& info(const Persion* msg);
 };
 
-const ::Info&
+const ::itheima::Persion&
 Persion::HasBitSetters::info(const Persion* msg) {
   return *msg->info_;
 }
@@ -133,7 +137,7 @@ const int Persion::kInfoFieldNumber;
 Persion::Persion()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:Persion)
+  // @@protoc_insertion_point(constructor:itcast.Persion)
 }
 Persion::Persion(const Persion& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
@@ -145,14 +149,14 @@ Persion::Persion(const Persion& from)
     sex_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.sex_);
   }
   if (from.has_info()) {
-    info_ = new ::Info(*from.info_);
+    info_ = new ::itheima::Persion(*from.info_);
   } else {
     info_ = nullptr;
   }
   ::memcpy(&id_, &from.id_,
     static_cast<size_t>(reinterpret_cast<char*>(&color_) -
     reinterpret_cast<char*>(&id_)) + sizeof(color_));
-  // @@protoc_insertion_point(copy_constructor:Persion)
+  // @@protoc_insertion_point(copy_constructor:itcast.Persion)
 }
 
 void Persion::SharedCtor() {
@@ -164,7 +168,7 @@ void Persion::SharedCtor() {
 }
 
 Persion::~Persion() {
-  // @@protoc_insertion_point(destructor:Persion)
+  // @@protoc_insertion_point(destructor:itcast.Persion)
   SharedDtor();
 }
 
@@ -183,7 +187,7 @@ const Persion& Persion::default_instance() {
 
 
 void Persion::Clear() {
-// @@protoc_insertion_point(message_clear_start:Persion)
+// @@protoc_insertion_point(message_clear_start:itcast.Persion)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -230,7 +234,7 @@ const char* Persion::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
       // string sex = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8(mutable_sex(), ptr, ctx, "Persion.sex");
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8(mutable_sex(), ptr, ctx, "itcast.Persion.sex");
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -241,15 +245,15 @@ const char* Persion::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .Color color = 5;
+      // .itcast.Color color = 5;
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
-          set_color(static_cast<::Color>(val));
+          set_color(static_cast<::itcast::Color>(val));
         } else goto handle_unusual;
         continue;
-      // .Info info = 6;
+      // .itheima.Persion info = 6;
       case 6:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
           ptr = ctx->ParseMessage(mutable_info(), ptr);
@@ -280,7 +284,7 @@ bool Persion::MergePartialFromCodedStream(
     ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
   ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:Persion)
+  // @@protoc_insertion_point(parse_start:itcast.Persion)
   for (;;) {
     ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
@@ -318,7 +322,7 @@ bool Persion::MergePartialFromCodedStream(
           DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
             this->sex().data(), static_cast<int>(this->sex().length()),
             ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE,
-            "Persion.sex"));
+            "itcast.Persion.sex"));
         } else {
           goto handle_unusual;
         }
@@ -338,21 +342,21 @@ bool Persion::MergePartialFromCodedStream(
         break;
       }
 
-      // .Color color = 5;
+      // .itcast.Color color = 5;
       case 5: {
         if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (40 & 0xFF)) {
           int value = 0;
           DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
                    int, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_color(static_cast< ::Color >(value));
+          set_color(static_cast< ::itcast::Color >(value));
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // .Info info = 6;
+      // .itheima.Persion info = 6;
       case 6: {
         if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (50 & 0xFF)) {
           DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
@@ -375,10 +379,10 @@ bool Persion::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:Persion)
+  // @@protoc_insertion_point(parse_success:itcast.Persion)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:Persion)
+  // @@protoc_insertion_point(parse_failure:itcast.Persion)
   return false;
 #undef DO_
 }
@@ -386,7 +390,7 @@ failure:
 
 void Persion::SerializeWithCachedSizes(
     ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Persion)
+  // @@protoc_insertion_point(serialize_start:itcast.Persion)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -406,7 +410,7 @@ void Persion::SerializeWithCachedSizes(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->sex().data(), static_cast<int>(this->sex().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Persion.sex");
+      "itcast.Persion.sex");
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
       3, this->sex(), output);
   }
@@ -416,13 +420,13 @@ void Persion::SerializeWithCachedSizes(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(4, this->age(), output);
   }
 
-  // .Color color = 5;
+  // .itcast.Color color = 5;
   if (this->color() != 0) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnum(
       5, this->color(), output);
   }
 
-  // .Info info = 6;
+  // .itheima.Persion info = 6;
   if (this->has_info()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteMessageMaybeToArray(
       6, HasBitSetters::info(this), output);
@@ -432,12 +436,12 @@ void Persion::SerializeWithCachedSizes(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:Persion)
+  // @@protoc_insertion_point(serialize_end:itcast.Persion)
 }
 
 ::PROTOBUF_NAMESPACE_ID::uint8* Persion::InternalSerializeWithCachedSizesToArray(
     ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Persion)
+  // @@protoc_insertion_point(serialize_to_array_start:itcast.Persion)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -457,7 +461,7 @@ void Persion::SerializeWithCachedSizes(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->sex().data(), static_cast<int>(this->sex().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Persion.sex");
+      "itcast.Persion.sex");
     target =
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
         3, this->sex(), target);
@@ -468,13 +472,13 @@ void Persion::SerializeWithCachedSizes(
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(4, this->age(), target);
   }
 
-  // .Color color = 5;
+  // .itcast.Color color = 5;
   if (this->color() != 0) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       5, this->color(), target);
   }
 
-  // .Info info = 6;
+  // .itheima.Persion info = 6;
   if (this->has_info()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessageToArray(
@@ -485,12 +489,12 @@ void Persion::SerializeWithCachedSizes(
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Persion)
+  // @@protoc_insertion_point(serialize_to_array_end:itcast.Persion)
   return target;
 }
 
 size_t Persion::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:Persion)
+// @@protoc_insertion_point(message_byte_size_start:itcast.Persion)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -517,7 +521,7 @@ size_t Persion::ByteSizeLong() const {
         this->sex());
   }
 
-  // .Info info = 6;
+  // .itheima.Persion info = 6;
   if (this->has_info()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -538,7 +542,7 @@ size_t Persion::ByteSizeLong() const {
         this->age());
   }
 
-  // .Color color = 5;
+  // .itcast.Color color = 5;
   if (this->color() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->color());
@@ -550,22 +554,22 @@ size_t Persion::ByteSizeLong() const {
 }
 
 void Persion::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:Persion)
+// @@protoc_insertion_point(generalized_merge_from_start:itcast.Persion)
   GOOGLE_DCHECK_NE(&from, this);
   const Persion* source =
       ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<Persion>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Persion)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:itcast.Persion)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:Persion)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:itcast.Persion)
     MergeFrom(*source);
   }
 }
 
 void Persion::MergeFrom(const Persion& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:Persion)
+// @@protoc_insertion_point(class_specific_merge_from_start:itcast.Persion)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -577,7 +581,7 @@ void Persion::MergeFrom(const Persion& from) {
     sex_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.sex_);
   }
   if (from.has_info()) {
-    mutable_info()->::Info::MergeFrom(from.info());
+    mutable_info()->::itheima::Persion::MergeFrom(from.info());
   }
   if (from.id() != 0) {
     set_id(from.id());
@@ -591,14 +595,14 @@ void Persion::MergeFrom(const Persion& from) {
 }
 
 void Persion::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:Persion)
+// @@protoc_insertion_point(generalized_copy_from_start:itcast.Persion)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void Persion::CopyFrom(const Persion& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:Persion)
+// @@protoc_insertion_point(class_specific_copy_from_start:itcast.Persion)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -630,9 +634,10 @@ void Persion::InternalSwap(Persion* other) {
 
 
 // @@protoc_insertion_point(namespace_scope)
+}  // namespace itcast
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::Persion* Arena::CreateMaybeMessage< ::Persion >(Arena* arena) {
-  return Arena::CreateInternal< ::Persion >(arena);
+template<> PROTOBUF_NOINLINE ::itcast::Persion* Arena::CreateMaybeMessage< ::itcast::Persion >(Arena* arena) {
+  return Arena::CreateInternal< ::itcast::Persion >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

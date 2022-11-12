@@ -56,12 +56,15 @@ struct TableStruct_Persion_2eproto {
   static const ::PROTOBUF_NAMESPACE_ID::uint32 offsets[];
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Persion_2eproto;
+namespace itcast {
 class Persion;
 class PersionDefaultTypeInternal;
 extern PersionDefaultTypeInternal _Persion_default_instance_;
+}  // namespace itcast
 PROTOBUF_NAMESPACE_OPEN
-template<> ::Persion* Arena::CreateMaybeMessage<::Persion>(Arena*);
+template<> ::itcast::Persion* Arena::CreateMaybeMessage<::itcast::Persion>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
+namespace itcast {
 
 enum Color : int {
   Red = 0,
@@ -92,7 +95,7 @@ inline bool Color_Parse(
 // ===================================================================
 
 class Persion :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Persion) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:itcast.Persion) */ {
  public:
   Persion();
   virtual ~Persion();
@@ -176,7 +179,7 @@ class Persion :
   void InternalSwap(Persion* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Persion";
+    return "itcast.Persion";
   }
   private:
   inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
@@ -230,14 +233,14 @@ class Persion :
   std::string* release_sex();
   void set_allocated_sex(std::string* sex);
 
-  // .Info info = 6;
+  // .itheima.Persion info = 6;
   bool has_info() const;
   void clear_info();
   static const int kInfoFieldNumber = 6;
-  const ::Info& info() const;
-  ::Info* release_info();
-  ::Info* mutable_info();
-  void set_allocated_info(::Info* info);
+  const ::itheima::Persion& info() const;
+  ::itheima::Persion* release_info();
+  ::itheima::Persion* mutable_info();
+  void set_allocated_info(::itheima::Persion* info);
 
   // int32 id = 1;
   void clear_id();
@@ -251,20 +254,20 @@ class Persion :
   ::PROTOBUF_NAMESPACE_ID::int32 age() const;
   void set_age(::PROTOBUF_NAMESPACE_ID::int32 value);
 
-  // .Color color = 5;
+  // .itcast.Color color = 5;
   void clear_color();
   static const int kColorFieldNumber = 5;
-  ::Color color() const;
-  void set_color(::Color value);
+  ::itcast::Color color() const;
+  void set_color(::itcast::Color value);
 
-  // @@protoc_insertion_point(class_scope:Persion)
+  // @@protoc_insertion_point(class_scope:itcast.Persion)
  private:
   class HasBitSetters;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr sex_;
-  ::Info* info_;
+  ::itheima::Persion* info_;
   ::PROTOBUF_NAMESPACE_ID::int32 id_;
   ::PROTOBUF_NAMESPACE_ID::int32 age_;
   int color_;
@@ -287,13 +290,13 @@ inline void Persion::clear_id() {
   id_ = 0;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 Persion::id() const {
-  // @@protoc_insertion_point(field_get:Persion.id)
+  // @@protoc_insertion_point(field_get:itcast.Persion.id)
   return id_;
 }
 inline void Persion::set_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
   id_ = value;
-  // @@protoc_insertion_point(field_set:Persion.id)
+  // @@protoc_insertion_point(field_set:itcast.Persion.id)
 }
 
 // repeated bytes name = 2;
@@ -304,60 +307,60 @@ inline void Persion::clear_name() {
   name_.Clear();
 }
 inline const std::string& Persion::name(int index) const {
-  // @@protoc_insertion_point(field_get:Persion.name)
+  // @@protoc_insertion_point(field_get:itcast.Persion.name)
   return name_.Get(index);
 }
 inline std::string* Persion::mutable_name(int index) {
-  // @@protoc_insertion_point(field_mutable:Persion.name)
+  // @@protoc_insertion_point(field_mutable:itcast.Persion.name)
   return name_.Mutable(index);
 }
 inline void Persion::set_name(int index, const std::string& value) {
-  // @@protoc_insertion_point(field_set:Persion.name)
+  // @@protoc_insertion_point(field_set:itcast.Persion.name)
   name_.Mutable(index)->assign(value);
 }
 inline void Persion::set_name(int index, std::string&& value) {
-  // @@protoc_insertion_point(field_set:Persion.name)
+  // @@protoc_insertion_point(field_set:itcast.Persion.name)
   name_.Mutable(index)->assign(std::move(value));
 }
 inline void Persion::set_name(int index, const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   name_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:Persion.name)
+  // @@protoc_insertion_point(field_set_char:itcast.Persion.name)
 }
 inline void Persion::set_name(int index, const void* value, size_t size) {
   name_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Persion.name)
+  // @@protoc_insertion_point(field_set_pointer:itcast.Persion.name)
 }
 inline std::string* Persion::add_name() {
-  // @@protoc_insertion_point(field_add_mutable:Persion.name)
+  // @@protoc_insertion_point(field_add_mutable:itcast.Persion.name)
   return name_.Add();
 }
 inline void Persion::add_name(const std::string& value) {
   name_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:Persion.name)
+  // @@protoc_insertion_point(field_add:itcast.Persion.name)
 }
 inline void Persion::add_name(std::string&& value) {
   name_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:Persion.name)
+  // @@protoc_insertion_point(field_add:itcast.Persion.name)
 }
 inline void Persion::add_name(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   name_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:Persion.name)
+  // @@protoc_insertion_point(field_add_char:itcast.Persion.name)
 }
 inline void Persion::add_name(const void* value, size_t size) {
   name_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:Persion.name)
+  // @@protoc_insertion_point(field_add_pointer:itcast.Persion.name)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
 Persion::name() const {
-  // @@protoc_insertion_point(field_list:Persion.name)
+  // @@protoc_insertion_point(field_list:itcast.Persion.name)
   return name_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
 Persion::mutable_name() {
-  // @@protoc_insertion_point(field_mutable_list:Persion.name)
+  // @@protoc_insertion_point(field_mutable_list:itcast.Persion.name)
   return &name_;
 }
 
@@ -366,39 +369,39 @@ inline void Persion::clear_sex() {
   sex_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 inline const std::string& Persion::sex() const {
-  // @@protoc_insertion_point(field_get:Persion.sex)
+  // @@protoc_insertion_point(field_get:itcast.Persion.sex)
   return sex_.GetNoArena();
 }
 inline void Persion::set_sex(const std::string& value) {
   
   sex_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:Persion.sex)
+  // @@protoc_insertion_point(field_set:itcast.Persion.sex)
 }
 inline void Persion::set_sex(std::string&& value) {
   
   sex_.SetNoArena(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:Persion.sex)
+  // @@protoc_insertion_point(field_set_rvalue:itcast.Persion.sex)
 }
 inline void Persion::set_sex(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   sex_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:Persion.sex)
+  // @@protoc_insertion_point(field_set_char:itcast.Persion.sex)
 }
 inline void Persion::set_sex(const char* value, size_t size) {
   
   sex_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:Persion.sex)
+  // @@protoc_insertion_point(field_set_pointer:itcast.Persion.sex)
 }
 inline std::string* Persion::mutable_sex() {
   
-  // @@protoc_insertion_point(field_mutable:Persion.sex)
+  // @@protoc_insertion_point(field_mutable:itcast.Persion.sex)
   return sex_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 inline std::string* Persion::release_sex() {
-  // @@protoc_insertion_point(field_release:Persion.sex)
+  // @@protoc_insertion_point(field_release:itcast.Persion.sex)
   
   return sex_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
@@ -409,7 +412,7 @@ inline void Persion::set_allocated_sex(std::string* sex) {
     
   }
   sex_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), sex);
-  // @@protoc_insertion_point(field_set_allocated:Persion.sex)
+  // @@protoc_insertion_point(field_set_allocated:itcast.Persion.sex)
 }
 
 // int32 age = 4;
@@ -417,56 +420,56 @@ inline void Persion::clear_age() {
   age_ = 0;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 Persion::age() const {
-  // @@protoc_insertion_point(field_get:Persion.age)
+  // @@protoc_insertion_point(field_get:itcast.Persion.age)
   return age_;
 }
 inline void Persion::set_age(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
   age_ = value;
-  // @@protoc_insertion_point(field_set:Persion.age)
+  // @@protoc_insertion_point(field_set:itcast.Persion.age)
 }
 
-// .Color color = 5;
+// .itcast.Color color = 5;
 inline void Persion::clear_color() {
   color_ = 0;
 }
-inline ::Color Persion::color() const {
-  // @@protoc_insertion_point(field_get:Persion.color)
-  return static_cast< ::Color >(color_);
+inline ::itcast::Color Persion::color() const {
+  // @@protoc_insertion_point(field_get:itcast.Persion.color)
+  return static_cast< ::itcast::Color >(color_);
 }
-inline void Persion::set_color(::Color value) {
+inline void Persion::set_color(::itcast::Color value) {
   
   color_ = value;
-  // @@protoc_insertion_point(field_set:Persion.color)
+  // @@protoc_insertion_point(field_set:itcast.Persion.color)
 }
 
-// .Info info = 6;
+// .itheima.Persion info = 6;
 inline bool Persion::has_info() const {
   return this != internal_default_instance() && info_ != nullptr;
 }
-inline const ::Info& Persion::info() const {
-  const ::Info* p = info_;
-  // @@protoc_insertion_point(field_get:Persion.info)
-  return p != nullptr ? *p : *reinterpret_cast<const ::Info*>(
-      &::_Info_default_instance_);
+inline const ::itheima::Persion& Persion::info() const {
+  const ::itheima::Persion* p = info_;
+  // @@protoc_insertion_point(field_get:itcast.Persion.info)
+  return p != nullptr ? *p : *reinterpret_cast<const ::itheima::Persion*>(
+      &::itheima::_Persion_default_instance_);
 }
-inline ::Info* Persion::release_info() {
-  // @@protoc_insertion_point(field_release:Persion.info)
+inline ::itheima::Persion* Persion::release_info() {
+  // @@protoc_insertion_point(field_release:itcast.Persion.info)
   
-  ::Info* temp = info_;
+  ::itheima::Persion* temp = info_;
   info_ = nullptr;
   return temp;
 }
-inline ::Info* Persion::mutable_info() {
+inline ::itheima::Persion* Persion::mutable_info() {
   
   if (info_ == nullptr) {
-    auto* p = CreateMaybeMessage<::Info>(GetArenaNoVirtual());
+    auto* p = CreateMaybeMessage<::itheima::Persion>(GetArenaNoVirtual());
     info_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:Persion.info)
+  // @@protoc_insertion_point(field_mutable:itcast.Persion.info)
   return info_;
 }
-inline void Persion::set_allocated_info(::Info* info) {
+inline void Persion::set_allocated_info(::itheima::Persion* info) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == nullptr) {
     delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(info_);
@@ -482,7 +485,7 @@ inline void Persion::set_allocated_info(::Info* info) {
     
   }
   info_ = info;
-  // @@protoc_insertion_point(field_set_allocated:Persion.info)
+  // @@protoc_insertion_point(field_set_allocated:itcast.Persion.info)
 }
 
 #ifdef __GNUC__
@@ -491,13 +494,14 @@ inline void Persion::set_allocated_info(::Info* info) {
 
 // @@protoc_insertion_point(namespace_scope)
 
+}  // namespace itcast
 
 PROTOBUF_NAMESPACE_OPEN
 
-template <> struct is_proto_enum< ::Color> : ::std::true_type {};
+template <> struct is_proto_enum< ::itcast::Color> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::Color>() {
-  return ::Color_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::itcast::Color>() {
+  return ::itcast::Color_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE
