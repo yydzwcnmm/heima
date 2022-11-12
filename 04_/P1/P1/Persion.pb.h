@@ -172,17 +172,23 @@ class Persion :
 
   // accessors -------------------------------------------------------
 
-  // bytes name = 2;
+  // repeated bytes name = 2;
+  int name_size() const;
   void clear_name();
   static const int kNameFieldNumber = 2;
-  const std::string& name() const;
-  void set_name(const std::string& value);
-  void set_name(std::string&& value);
-  void set_name(const char* value);
-  void set_name(const void* value, size_t size);
-  std::string* mutable_name();
-  std::string* release_name();
-  void set_allocated_name(std::string* name);
+  const std::string& name(int index) const;
+  std::string* mutable_name(int index);
+  void set_name(int index, const std::string& value);
+  void set_name(int index, std::string&& value);
+  void set_name(int index, const char* value);
+  void set_name(int index, const void* value, size_t size);
+  std::string* add_name();
+  void add_name(const std::string& value);
+  void add_name(std::string&& value);
+  void add_name(const char* value);
+  void add_name(const void* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& name() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_name();
 
   // string sex = 3;
   void clear_sex();
@@ -213,7 +219,7 @@ class Persion :
   class HasBitSetters;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr sex_;
   ::PROTOBUF_NAMESPACE_ID::int32 id_;
   ::PROTOBUF_NAMESPACE_ID::int32 age_;
@@ -245,55 +251,69 @@ inline void Persion::set_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:Persion.id)
 }
 
-// bytes name = 2;
+// repeated bytes name = 2;
+inline int Persion::name_size() const {
+  return name_.size();
+}
 inline void Persion::clear_name() {
-  name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  name_.Clear();
 }
-inline const std::string& Persion::name() const {
+inline const std::string& Persion::name(int index) const {
   // @@protoc_insertion_point(field_get:Persion.name)
-  return name_.GetNoArena();
+  return name_.Get(index);
 }
-inline void Persion::set_name(const std::string& value) {
-  
-  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+inline std::string* Persion::mutable_name(int index) {
+  // @@protoc_insertion_point(field_mutable:Persion.name)
+  return name_.Mutable(index);
+}
+inline void Persion::set_name(int index, const std::string& value) {
   // @@protoc_insertion_point(field_set:Persion.name)
+  name_.Mutable(index)->assign(value);
 }
-inline void Persion::set_name(std::string&& value) {
-  
-  name_.SetNoArena(
-    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:Persion.name)
+inline void Persion::set_name(int index, std::string&& value) {
+  // @@protoc_insertion_point(field_set:Persion.name)
+  name_.Mutable(index)->assign(std::move(value));
 }
-inline void Persion::set_name(const char* value) {
+inline void Persion::set_name(int index, const char* value) {
   GOOGLE_DCHECK(value != nullptr);
-  
-  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  name_.Mutable(index)->assign(value);
   // @@protoc_insertion_point(field_set_char:Persion.name)
 }
-inline void Persion::set_name(const void* value, size_t size) {
-  
-  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
+inline void Persion::set_name(int index, const void* value, size_t size) {
+  name_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
   // @@protoc_insertion_point(field_set_pointer:Persion.name)
 }
-inline std::string* Persion::mutable_name() {
-  
-  // @@protoc_insertion_point(field_mutable:Persion.name)
-  return name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+inline std::string* Persion::add_name() {
+  // @@protoc_insertion_point(field_add_mutable:Persion.name)
+  return name_.Add();
 }
-inline std::string* Persion::release_name() {
-  // @@protoc_insertion_point(field_release:Persion.name)
-  
-  return name_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+inline void Persion::add_name(const std::string& value) {
+  name_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:Persion.name)
 }
-inline void Persion::set_allocated_name(std::string* name) {
-  if (name != nullptr) {
-    
-  } else {
-    
-  }
-  name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:Persion.name)
+inline void Persion::add_name(std::string&& value) {
+  name_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:Persion.name)
+}
+inline void Persion::add_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  name_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:Persion.name)
+}
+inline void Persion::add_name(const void* value, size_t size) {
+  name_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:Persion.name)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+Persion::name() const {
+  // @@protoc_insertion_point(field_list:Persion.name)
+  return name_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+Persion::mutable_name() {
+  // @@protoc_insertion_point(field_mutable_list:Persion.name)
+  return &name_;
 }
 
 // string sex = 3;
