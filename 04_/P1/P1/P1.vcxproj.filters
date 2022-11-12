@@ -21,9 +21,15 @@
     <ClCompile Include="test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="info.pb.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Persion.pb.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="info.pb.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

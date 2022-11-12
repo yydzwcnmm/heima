@@ -1,4 +1,4 @@
-#include<iostream>
+﻿#include<iostream>
 #include"Persion.pb.h"
 
 
@@ -23,6 +23,12 @@ using std::string;
     p.set_sex("man");
     p.set_age(17);
     p.set_color(Blue);
+    Info *info = p.mutable_info();
+	  info->set_addr("新日暮里");
+    info->set_number(900);
+
+
+
 
    //将PERSION对象-》字符串
    string output;
@@ -30,10 +36,12 @@ using std::string;
    cout<<"序列化后的数据： "<<output<<endl;
    //数据传输
    //接受数据 ——》解码 -》 原始数据
-
+  
    Persion pp;
    pp.ParseFromString(output);
+
    //解析后数据在pp
+   Info ii = pp.info();
    cout<<"id "<<pp.id()<<endl;
    //cout<<"name "<<pp.name()<<endl;
    cout<<"name0 =  "<<pp.name(0)<<endl;
@@ -42,4 +50,6 @@ using std::string;
    cout<<"sex  "<<pp.sex()<<endl;
    cout<<"age  "<<pp.age()<<endl;
     cout<<"color=   "<<pp.color()<<endl;
+  cout<<"ii.number=   "<<ii.number()<<endl;
+  cout<<"ii.addr=   "<<ii.addr()<<endl;
  }

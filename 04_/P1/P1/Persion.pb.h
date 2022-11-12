@@ -33,6 +33,7 @@
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
+#include "info.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_Persion_2eproto
@@ -229,6 +230,15 @@ class Persion :
   std::string* release_sex();
   void set_allocated_sex(std::string* sex);
 
+  // .Info info = 6;
+  bool has_info() const;
+  void clear_info();
+  static const int kInfoFieldNumber = 6;
+  const ::Info& info() const;
+  ::Info* release_info();
+  ::Info* mutable_info();
+  void set_allocated_info(::Info* info);
+
   // int32 id = 1;
   void clear_id();
   static const int kIdFieldNumber = 1;
@@ -254,6 +264,7 @@ class Persion :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr sex_;
+  ::Info* info_;
   ::PROTOBUF_NAMESPACE_ID::int32 id_;
   ::PROTOBUF_NAMESPACE_ID::int32 age_;
   int color_;
@@ -427,6 +438,51 @@ inline void Persion::set_color(::Color value) {
   
   color_ = value;
   // @@protoc_insertion_point(field_set:Persion.color)
+}
+
+// .Info info = 6;
+inline bool Persion::has_info() const {
+  return this != internal_default_instance() && info_ != nullptr;
+}
+inline const ::Info& Persion::info() const {
+  const ::Info* p = info_;
+  // @@protoc_insertion_point(field_get:Persion.info)
+  return p != nullptr ? *p : *reinterpret_cast<const ::Info*>(
+      &::_Info_default_instance_);
+}
+inline ::Info* Persion::release_info() {
+  // @@protoc_insertion_point(field_release:Persion.info)
+  
+  ::Info* temp = info_;
+  info_ = nullptr;
+  return temp;
+}
+inline ::Info* Persion::mutable_info() {
+  
+  if (info_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Info>(GetArenaNoVirtual());
+    info_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:Persion.info)
+  return info_;
+}
+inline void Persion::set_allocated_info(::Info* info) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(info_);
+  }
+  if (info) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      info = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, info, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  info_ = info;
+  // @@protoc_insertion_point(field_set_allocated:Persion.info)
 }
 
 #ifdef __GNUC__
