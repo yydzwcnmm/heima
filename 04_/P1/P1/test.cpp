@@ -22,6 +22,7 @@ using std::string;
    //p.set_name("lufei");
     p.set_sex("man");
     p.set_age(17);
+    p.set_color(Blue);
 
    //将PERSION对象-》字符串
    string output;
@@ -40,5 +41,5 @@ using std::string;
    cout<<"name2 =  "<<pp.name(2)<<endl;
    cout<<"sex  "<<pp.sex()<<endl;
    cout<<"age  "<<pp.age()<<endl;
-
+    cout<<"color=   "<<pp.color()<<endl;
  }
