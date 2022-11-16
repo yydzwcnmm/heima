@@ -43,8 +43,28 @@ int main()
 		<< ", sign: " << t->sign()
 		<< ", data: " << t->data() << endl;
 	
+// ++++++++++++++++++++++++++++++++++++++++++++++++++
 
+    RespondInfo infosv = { 66,99,"adw","dww","xgp"};
+    RespondCodec sendsv(&infosv);
+    // 数据编码
+  
+    
+    //
+    
+    //output = send.encodeMsg();
+    output = enCode(&sendsv);
 
+    // 解码
+    RespondCodec resv2(output);
+    //RequestMsg* t =  (RequestMsg* )resv.decodeMsg();
+    RespondMsg* r2 =  (RespondMsg* )decode(&resv2);
+
+   cout << "status: " << r2->status()
+		<< ", seckeyID: " << r2->seckeyid()
+		<< ", clinetID: " << r2->clientid()
+		<< ", serverID: " << r2->serverid()
+		<< ", data: " << r2->data() << endl;
 
 
 
