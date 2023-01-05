@@ -1,19 +1,20 @@
 #pragma once
-#include"TcpServer.h"
-#include<map>
+#include <map>
+#include "TcpServer.h"
+#include "Message.pb.h"
 class SerOP
 {
 public:
 	SerOP(string json);
 	~SerOP();
-	//Æô¶¯·şÎñÆ÷
+	//å¯åŠ¨æœåŠ¡å™¨
 	void startServer();
-	//Ïß³Ì¹¤×÷º¯Êı
+	//çº¿ç¨‹å·¥ä½œå‡½æ•°
 	static void* working(void* arg);
-	void seckeyAgree();
+	void seckeyAgree(RequestMsg* reqMsg);
 private:
 	unsigned short my_port;
-	string my_serverID; //µ±Ç°·şÎñÆ÷ID
+	string my_serverID; //å½“å‰æœåŠ¡å™¨ID
 	TcpServer *m_server = NULL;
 	//map<pthread_t, TcpSocket>m_list;
 	//TcpSocket* tcp;

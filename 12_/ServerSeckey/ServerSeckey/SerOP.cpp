@@ -1,23 +1,31 @@
 #include "SerOP.h"
-#include"TcpServer.h"
-#include<string>
-#include<iostream>
-#include"RequestCodec.h"
-#include"RequestFactory.h"
-#include"RespondFactory.h"
-#include"TcpSocket.h"
-SerOP::SerOP(string json)
+#include "TcpSocket.h"
+#include "RequestFactory.h"
+#include "RequestCodec.h"
+#include "RespondCodec.h"
+#include "RespondFactory.h"
+#include "RsaCrypto.h"
+#include <string>
+#include <iostream>
+#include <fstream>
+//#include <json/json.h>
+//#include <unistd.h>
+#include "Hash.h"
+using namespace std;
+//using namespace Json;
+
+	SerOP::SerOP(string json)
 {
-	// ½âÎöjsonÎÄ¼ş, ¶ÁÎÄ¼ş -> Value ROOT
+	// è§£æjsonæ–‡ä»¶, è¯»æ–‡ä»¶ -> Value ROOT
 	ifstream ifs(json);
 	Reader r;
 	Value root;
-	//½âÎöºó·Åµ½ROOTÖĞ
+	//è§£æåæ”¾åˆ°ROOTä¸­
 	r.parse(ifs, root);
-	// ½«rootÖĞµÄ¼üÖµ¶ÔvalueÖµÈ¡³ö
+	// å°†rootä¸­çš„é”®å€¼å¯¹valueå€¼å–å‡º
 	my_port = root["Port"].asInt();
 	my_serverID = root["ServerID"].asString();
-	cout << my_serverID << ", ¶Ë¿Ú:" << my_port << endl;
+	cout << my_serverID << ", ç«¯å£:" << my_port << endl;
 }
 
 SerOP::~SerOP()
@@ -28,19 +36,21 @@ SerOP::~SerOP()
 	
 }
 
+
+
 void SerOP::startServer()
 {
 	TcpServer *m_server = new TcpServer;
 	m_server->setListen(my_port);
 	while (1)
 	{
-		cout << "µÈ´ı¿Í»§¶ËÁ¬½Ó" << endl;
-		//µÈ´ı¿Í»§¶ËÁ¬½Ó
+		cout << "ç­‰å¾…å®¢æˆ·ç«¯è¿æ¥" << endl;
+		//ç­‰å¾…å®¢æˆ·ç«¯è¿æ¥
 		arg.tcp = m_server->acceptConn();
 		if (arg.tcp == NULL) {
 			continue;
 		}
-		//´´½¨×ÓÏß³Ì
+		//åˆ›å»ºå­çº¿ç¨‹
 		pthread_t tid; 
 		//!!!!!!
 		pthread_create(&tid,NULL,working,& (arg));
@@ -48,6 +58,7 @@ void SerOP::startServer()
 	}
 
 }
+
 
 void * SerOP::working(void* arg)
 {
@@ -57,25 +68,25 @@ void * SerOP::working(void* arg)
 	TcpSocket* tcp = argworking->tcp;
 	SerOP* pmeigeduixiang = argworking->a;
 
-	//½ÓÊÜ¿Í»§¶ËÊı¾İ
+	//æ¥å—å®¢æˆ·ç«¯æ•°æ®
 	string msg = tcp->recvMsg(); 
-	//¹¤³§Àà£¬Éú²ú±à½âÂë¶ÔÏó,·´ĞòÁĞ»¯
+	//å·¥å‚ç±»ï¼Œç”Ÿäº§ç¼–è§£ç å¯¹è±¡,ååºåˆ—åŒ–
 	CodecFactory* fac = new RequestFactory(msg);
 	Codec* c = fac->createCodec();
 	RequestMsg* req = (RequestMsg*)c->decodeMsg();
-	//·´ĞòÁĞ»¯Êı¾İ´æÈëREQ
+	//ååºåˆ—åŒ–æ•°æ®å­˜å…¥REQ
 
 	switch (req->cmdtype())
 	{
 	case 1:
-		//ÃÜÔ¿Ğ­ÉÌ!!!!!!!
-		pmeigeduixiang->seckeyAgree();
+		//å¯†é’¥åå•†!!!!!!!
+		pmeigeduixiang->seckeyAgree(req);
 		break;
 	case 2:
-		//ÃÜÔ¿Ğ£Ñé
+		//å¯†é’¥æ ¡éªŒ
 		break;
 	case 3:
-		//ÃÜÔ¿×¢Ïú
+		//å¯†é’¥æ³¨é”€
 		break;
 	default:
 		break;
@@ -83,10 +94,25 @@ void * SerOP::working(void* arg)
 	return NULL;
 	delete c;
 	delete fac;
-	//tcp´¦Àí
+	//tcpå¤„ç†
 }
 
-void SerOP::seckeyAgree()
+
+void SerOP::seckeyAgree(RequestMsg* reqMsg)
 {
+	
+	//å¯¹ç­¾åè¿›è¡Œæ ¡éªŒ
+	//å…¬é’¥æ•°æ®å†™å…¥ç£ç›˜
+	ofstream ofs("public.pem");
+	ofs<<reqMsg->data();
+	//åˆ›å»ºéå¯¹ç§°åŠ å¯†å¯¹è±¡
+	RsaCrypto rsa("public.pem",false);
+	bool b1 =rsa.rsaVerify();
+	if (b1 == false) {
+		cout << "ç­¾åæ ¡éªŒå¤±è´¥" << endl;
+	}
+	else {
+		 
+	}
 
 }

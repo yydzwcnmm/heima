@@ -33,7 +33,7 @@ public:
 	// 使用RSA签名
 	string rsaSign(string data, SignLevel level = Level3);
 	// 使用RSA验证签名
-	bool rsaVerify(string data, string signData, SignLevel level = Level3);
+	bool  (string data, string signData, SignLevel level = Level3);
 
 	// base64编码
 private:
