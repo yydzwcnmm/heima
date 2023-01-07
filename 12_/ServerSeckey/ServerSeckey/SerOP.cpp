@@ -8,8 +8,8 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-//#include <json/json.h>
-//#include <unistd.h>
+#include <json/json.h>
+#include <unistd.h>
 #include "Hash.h"
 using namespace std;
 //using namespace Json;
@@ -37,6 +37,24 @@ SerOP::~SerOP()
 }
 
 
+void SerOP::seckeyAgree(RequestMsg* reqMsg)
+{
+
+	//对签名进行校验
+	//公钥数据写入磁盘
+	ofstream ofs("public.pem");
+	ofs << reqMsg->data();
+	//创建非对称加密对象
+	RsaCrypto rsa("public.pem", false);
+	bool b1 = rsa.rsaVerify();
+	if (b1 == false) {
+		cout << "签名校验失败" << endl;
+	}
+	else {
+
+	}
+
+}
 
 void SerOP::startServer()
 {
@@ -97,22 +115,3 @@ void * SerOP::working(void* arg)
 	//tcp处理
 }
 
-
-void SerOP::seckeyAgree(RequestMsg* reqMsg)
-{
-	
-	//对签名进行校验
-	//公钥数据写入磁盘
-	ofstream ofs("public.pem");
-	ofs<<reqMsg->data();
-	//创建非对称加密对象
-	RsaCrypto rsa("public.pem",false);
-	bool b1 =rsa.rsaVerify();
-	if (b1 == false) {
-		cout << "签名校验失败" << endl;
-	}
-	else {
-		 
-	}
-
-}
