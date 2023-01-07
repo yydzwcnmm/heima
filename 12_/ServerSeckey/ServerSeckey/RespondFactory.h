@@ -10,6 +10,7 @@ class RespondFactory :
 public:
 	RespondFactory(std::string enc);
 	RespondFactory(RespondInfo* info);
+	RespondFactory();
 	Codec* createCodec();
 
 	~RespondFactory();
