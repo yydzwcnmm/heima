@@ -35,7 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{fbd71885-bb4c-49a9-84dd-b17d959ec466}</ProjectGuid>
+    <ProjectGuid>{59b3b757-520a-4bb9-8570-8299d6862c55}</ProjectGuid>
     <Keyword>Linux</Keyword>
     <RootNamespace>ServerSeckey</RootNamespace>
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
@@ -74,9 +74,6 @@
   <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\+\++\12_\json;D:\VMDATA\head\include;E:\lib\include;E:\protoc\include;D:\opensll\OpenSSL-Win32\include;$(IncludePath)</IncludePath>
-  </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="Codec.cpp" />
     <ClCompile Include="CodecFactory.cpp" />
@@ -88,7 +85,7 @@
     <ClCompile Include="RespondCodec.cpp" />
     <ClCompile Include="RespondFactory.cpp" />
     <ClCompile Include="RsaCrypto.cpp" />
-    <ClCompile Include="SerOP.cpp" />
+    <ClCompile Include="ServerOP.cpp" />
     <ClCompile Include="TcpServer.cpp" />
     <ClCompile Include="TcpSocket.cpp" />
   </ItemGroup>
@@ -102,18 +99,14 @@
     <ClInclude Include="RespondCodec.h" />
     <ClInclude Include="RespondFactory.h" />
     <ClInclude Include="RsaCrypto.h" />
-    <ClInclude Include="SerOP.h" />
+    <ClInclude Include="ServerOP.h" />
     <ClInclude Include="TcpServer.h" />
     <ClInclude Include="TcpSocket.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="config.json" />
-    <None Include="Message.proto" />
-  </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>D:\opensll\OpenSSL-Win32\include;D:\+\++\12_\json;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
+    <Link>
+      <LibraryDependencies>pthread;json;crypto;protobuf</LibraryDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

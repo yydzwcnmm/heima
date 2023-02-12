@@ -13,10 +13,6 @@ RespondFactory::RespondFactory(RespondInfo * info) : CodecFactory()
 	m_info = info;
 }
 
-RespondFactory::RespondFactory()
-{
-}
-
 Codec * RespondFactory::createCodec()
 {
 	Codec* codec = NULL;
