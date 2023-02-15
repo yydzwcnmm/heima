@@ -74,9 +74,9 @@ string ServerOP::seckeyAgree(RequestMsg* reqMsg)
 	// 创建哈希对象
 	Hash sha(T_SHA1);
 	sha.addData(reqMsg->data());
-	cout << "1111111111111111" << endl;
+	//cout << "1111111111111111" << endl;
 	bool bl = rsa.rsaVerify(sha.result(), reqMsg->sign());
-	cout << "00000000000000000000" << endl;
+	//cout << "00000000000000000000" << endl;
 	if (bl == false)
 	{
 		cout << "签名校验失败..." << endl;
@@ -90,8 +90,9 @@ string ServerOP::seckeyAgree(RequestMsg* reqMsg)
 		string key = getRandKey(Len16);
 		cout << "生成的随机秘钥: " << key << endl;
 		// 2. 通过公钥加密
-		cout << "aaaaaaaaaaaaaaaa" << endl;
+		//cout << "aaaaaaaaaaaaaaaa" << endl;
 		string seckey = rsa.rsaPubKeyEncrypt(key);
+		//公钥加密后为二进制数据，需要对数据进行BASE64 编码
 		cout << "加密之后的秘钥: " << seckey << endl;
 		// 3. 初始化回复的数据
 		info.clientID = reqMsg->clientid();
