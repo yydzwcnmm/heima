@@ -35,7 +35,7 @@ ClientOP::~ClientOP()
 bool ClientOP::seckeyAgree()
 {
 	// 0. 生成密钥对, 将公钥字符串读出
-	Cryptographic rsa;
+	RsaCrypto rsa;
 	// 生成密钥对
 	rsa.generateRsakey(1024);
 	// 读公钥文件
@@ -91,6 +91,7 @@ bool ClientOP::seckeyAgree()
 	// 将得到的密文解密
 	string key = rsa.rsaPriKeyDecrypt(resData->data());
 	cout << "对称加密的秘钥: " << key << endl;
+	// 秘钥写入共享内存中
 
 	delete factory;
 	delete c;
