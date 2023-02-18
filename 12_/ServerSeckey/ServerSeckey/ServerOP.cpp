@@ -122,7 +122,8 @@ ServerOP::~ServerOP()
 // 要求: 字符串中包含: a-z, A-Z, 0-9, 特殊字符
 string ServerOP::getRandKey(KeyLen len)
 {
-	// 设置随机数数种子 => 根据时间
+	//生产各不相同的随机字符串
+	// 设置随机数数种子 => 根据时间  ( 保证每次服务器生成的非对称加密密钥不同， ) 
 	srand(time(NULL));
 	int flag = 0;
 	string randStr = string();
