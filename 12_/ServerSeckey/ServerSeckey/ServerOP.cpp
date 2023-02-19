@@ -89,6 +89,9 @@ string ServerOP::seckeyAgree(RequestMsg* reqMsg)
 		//   对称加密的秘钥, 使用对称加密算法 aes, 秘钥长度: 16, 24, 32byte
 		string key = getRandKey(Len16);
 		cout << "生成的随机秘钥: " << key << endl;
+
+		
+
 		// 2. 通过公钥加密
 		//cout << "aaaaaaaaaaaaaaaa" << endl;
 		string seckey = rsa.rsaPubKeyEncrypt(key);
@@ -100,6 +103,8 @@ string ServerOP::seckeyAgree(RequestMsg* reqMsg)
 		info.seckeyID = 12;	// 需要数据库操作
 		info.serverID = m_serverID;
 		info.status = true;	
+		//将密钥写入共享内存
+
 	}
 
 	// 4. 序列化
