@@ -9,7 +9,25 @@ int main()
 	//创建对象
 	Connection* conn = env->createConnection("SCOTT","123456",);
 
+	Statement* st = conn->createStatement();
+	string sql = "slect * from dept";
+	//只设置表，没有查询
+	st->setSQL(sql);
+
+	ResultSet* result = st->executeQuery;
+	while (result->next())
+	{
+		cout << "no :" << result->getInt(1) << ","
+			<< "name:" << result->getString(2) << ","
+			<< "location:" << result->getString(3) << endl;
+
+	}
+	st->closeResultSet(result);
+
+
+
 	//销毁对象
+	conn->terminateStatement(st);
 	env->terminateConnection(conn);
 	//释放环境对象
 	Environment::terminateEnvironment(env);
