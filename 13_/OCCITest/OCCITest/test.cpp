@@ -24,6 +24,12 @@ int main()
 	}
 	st->closeResultSet(result);
 
+	//插入
+	sql = "insert into dept values(33,'GG BAO','gg')";
+	st->setSQL(sql);
+	int ret = st->executeUpdate();
+	cout << "insert ret = " << ret << endl;
+
 
 
 	//销毁对象
