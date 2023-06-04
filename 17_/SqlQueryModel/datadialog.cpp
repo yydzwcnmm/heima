@@ -16,6 +16,7 @@ DataDialog::~DataDialog()
 
 void DataDialog::setDept(const QMap<int,QString>& map)
 {
+    // 将部门信息保存到本地变量中
     dept = map;
     ui->cmbDept->clear();
     foreach(int id,dept.keys())
