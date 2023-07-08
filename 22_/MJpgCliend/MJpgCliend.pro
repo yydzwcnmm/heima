@@ -37,4 +37,4 @@ path=D:\opencv\opencv\build
 
 INCLUDEPATH+=$$path\include
 
-LIBS+=-L$$path\x64\vc15\lib -lopencv_world450d
+LIBS+=-L$$path\x64\vc15\lib -lopencv_world450
