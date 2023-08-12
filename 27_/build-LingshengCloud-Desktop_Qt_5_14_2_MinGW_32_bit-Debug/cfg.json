@@ -1,0 +1,11 @@
+{
+    "login": {
+        "pwd": "",
+        "remember": "",
+        "user": ""
+    },
+    "web_server": {
+        "ip": "192.68.6.2",
+        "port": "1010"
+    }
+}

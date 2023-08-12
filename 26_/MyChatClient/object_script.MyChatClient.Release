@@ -1,0 +1,16 @@
+release/clientsocket.o
+release/databasemagr.o
+release/main.o
+release/mainwindow.o
+release/loginwidget.o
+release/animationstackedwidget.o
+release/clineedit.o
+release/customwidget.o
+release/qrc_resource.o
+release/moc_clientsocket.o
+release/moc_databasemagr.o
+release/moc_mainwindow.o
+release/moc_loginwidget.o
+release/moc_animationstackedwidget.o
+release/moc_clineedit.o
+release/moc_customwidget.o

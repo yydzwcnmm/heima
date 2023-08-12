@@ -1,0 +1,10 @@
+release/common.o
+release/des.o
+release/logindialog.o
+release/main.o
+release/mainwindow.o
+release/titlewidget.o
+release/qrc_images.o
+release/moc_logindialog.o
+release/moc_mainwindow.o
+release/moc_titlewidget.o

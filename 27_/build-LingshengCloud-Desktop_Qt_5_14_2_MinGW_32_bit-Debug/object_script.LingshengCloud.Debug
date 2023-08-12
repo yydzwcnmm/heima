@@ -1,0 +1,10 @@
+debug/common.o
+debug/des.o
+debug/logindialog.o
+debug/main.o
+debug/mainwindow.o
+debug/titlewidget.o
+debug/qrc_images.o
+debug/moc_logindialog.o
+debug/moc_mainwindow.o
+debug/moc_titlewidget.o

@@ -1,0 +1,16 @@
+debug/clientsocket.o
+debug/databasemagr.o
+debug/main.o
+debug/mainwindow.o
+debug/loginwidget.o
+debug/animationstackedwidget.o
+debug/clineedit.o
+debug/customwidget.o
+debug/qrc_resource.o
+debug/moc_clientsocket.o
+debug/moc_databasemagr.o
+debug/moc_mainwindow.o
+debug/moc_loginwidget.o
+debug/moc_animationstackedwidget.o
+debug/moc_clineedit.o
+debug/moc_customwidget.o
