@@ -21,6 +21,32 @@ ButtonGroup::ButtonGroup(QWidget *parent) :
 
     }
     connect(m_mapper,SIGNAL(mapped(QString)),this,SLOT(onMapperButtonsClicked(QString)));
+
+
+    //最小化
+    connect(ui->btnMin, &QToolButton::clicked, this, [=](){
+        emit minWindow();
+    });
+    //最大化
+    connect(ui->btnMax, &QToolButton::clicked, this, [=](){
+        static bool flag = false;
+        if (!flag) {
+            ui->btnMax->setIcon(QIcon(":/images/main/window/title_normal.png"));
+        } else {
+            ui->btnMax->setIcon(QIcon(":/images/main/window/title_max.png"));
+        }
+        flag = !flag;
+        emit maxWindow();
+        qDebug()<<"最大化信号发送" ;
+
+    });
+
+    //关闭
+    connect(ui->btnClose, &QToolButton::clicked, this, [=](){
+        emit closeWindow();
+    });
+
+
 }
 
 ButtonGroup::~ButtonGroup()

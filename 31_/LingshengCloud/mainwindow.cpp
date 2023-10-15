@@ -9,7 +9,10 @@ MainWindow::MainWindow(QWidget *parent)
     //这段代码的作用是将当前窗口的标志设置为没有窗口边框和标题栏
      this->setWindowFlags(Qt::FramelessWindowHint | windowFlags());
     ui->button_group->setParent(this);
+    //处理按钮信号
     buttonsSignals();
+    //处理窗口信号
+    windowSignals();
 }
 
 MainWindow::~MainWindow()
@@ -49,5 +52,31 @@ void MainWindow::buttonsSignals()
             emit sigChangeUser();
     });
 
+
+}
+
+void MainWindow::windowSignals()
+{
+    //处理信号
+    //最小化
+    connect(ui->button_group, &ButtonGroup::minWindow, this, &MainWindow::showMinimized);
+
+    //最大化
+    connect(ui->button_group, &ButtonGroup::maxWindow, this, [=](){
+        qDebug()<<"最大化信号接收" ;
+        static bool mainFlag = false;
+        if (!mainFlag) {
+            this->showMaximized();
+            mainFlag = true;
+        } else {
+            this->showNormal();
+            mainFlag = false;
+        }
+
+
+    });
+
+    //关闭
+    connect(ui->button_group, &ButtonGroup::closeWindow, this, &MainWindow::close);
 
 }

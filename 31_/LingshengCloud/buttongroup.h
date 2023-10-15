@@ -48,6 +48,11 @@ signals:
     void sigTransform();
     void sigSwitchUser();
 
+    void minWindow();
+    void maxWindow();
+    void closeWindow();
+
+
 private slots:
     //void on_btnMyFile_clicked();
     //void on_btnShare_clicked();

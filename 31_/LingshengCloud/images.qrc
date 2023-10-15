@@ -21,5 +21,52 @@
         <file>images/main/window/title_max.png</file>
         <file>images/main/window/title_min.png</file>
         <file>images/main/window/title_normal.png</file>
+        <file>conf/fileType/accdb.png</file>
+        <file>conf/fileType/avi.png</file>
+        <file>conf/fileType/bmp.png</file>
+        <file>conf/fileType/css.png</file>
+        <file>conf/fileType/docx.png</file>
+        <file>conf/fileType/docx_mac.png</file>
+        <file>conf/fileType/eml.png</file>
+        <file>conf/fileType/eps.png</file>
+        <file>conf/fileType/fla.png</file>
+        <file>conf/fileType/gif.png</file>
+        <file>conf/fileType/gz.png</file>
+        <file>conf/fileType/html.png</file>
+        <file>conf/fileType/ind.png</file>
+        <file>conf/fileType/ini.png</file>
+        <file>conf/fileType/jpeg.png</file>
+        <file>conf/fileType/jpg.png</file>
+        <file>conf/fileType/jsf.png</file>
+        <file>conf/fileType/midi.png</file>
+        <file>conf/fileType/mov.png</file>
+        <file>conf/fileType/mp3.png</file>
+        <file>conf/fileType/mp4.png</file>
+        <file>conf/fileType/mpeg.png</file>
+        <file>conf/fileType/null.png</file>
+        <file>conf/fileType/other.png</file>
+        <file>conf/fileType/pdf.png</file>
+        <file>conf/fileType/png.png</file>
+        <file>conf/fileType/pptx_mac.png</file>
+        <file>conf/fileType/pptx_win.png</file>
+        <file>conf/fileType/proj.png</file>
+        <file>conf/fileType/psd.png</file>
+        <file>conf/fileType/pst.png</file>
+        <file>conf/fileType/pub.png</file>
+        <file>conf/fileType/rar.png</file>
+        <file>conf/fileType/readme.png</file>
+        <file>conf/fileType/settings.png</file>
+        <file>conf/fileType/tar.png</file>
+        <file>conf/fileType/test.jpg</file>
+        <file>conf/fileType/text.png</file>
+        <file>conf/fileType/tiff.png</file>
+        <file>conf/fileType/url.png</file>
+        <file>conf/fileType/vsd.png</file>
+        <file>conf/fileType/wav.png</file>
+        <file>conf/fileType/wma.png</file>
+        <file>conf/fileType/wmv.png</file>
+        <file>conf/fileType/xlsx.png</file>
+        <file>conf/fileType/xlsx_mac.png</file>
+        <file>conf/fileType/zip.png</file>
     </qresource>
 </RCC>

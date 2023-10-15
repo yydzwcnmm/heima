@@ -30,9 +30,9 @@
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
-    <widget class="QWidget" name="myFile_page">
+    <widget class="MyFileWidget" name="myFile_page">
      <property name="styleSheet">
       <string notr="true"/>
      </property>
@@ -60,7 +60,13 @@
   <customwidget>
    <class>ButtonGroup</class>
    <extends>QWidget</extends>
-   <header location="global">buttongroup.h</header>
+   <header>buttongroup.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MyFileWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">myfilewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

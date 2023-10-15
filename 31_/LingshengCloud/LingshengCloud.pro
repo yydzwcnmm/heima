@@ -23,6 +23,7 @@ SOURCES += \
     logininfoinstance.cpp \
     main.cpp \
     mainwindow.cpp \
+    myfilewidget.cpp \
     titlewidget.cpp
 
 HEADERS += \
@@ -32,12 +33,14 @@ HEADERS += \
     logindialog.h \
     logininfoinstance.h \
     mainwindow.h \
+    myfilewidget.h \
     titlewidget.h
 
 FORMS += \
     buttongroup.ui \
     logindialog.ui \
     mainwindow.ui \
+    myfilewidget.ui \
     titlewidget.ui
 
 # Default rules for deployment.

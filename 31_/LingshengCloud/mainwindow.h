@@ -22,6 +22,8 @@ private:
     //处理按钮信号
     void buttonsSignals();
 
+    void windowSignals();
+
 private:
     Ui::MainWindow *ui;
 
