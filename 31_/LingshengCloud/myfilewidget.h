@@ -1,7 +1,10 @@
 #ifndef MYFILEWIDGET_H
 #define MYFILEWIDGET_H
 
-#include <QWidget>
+#include "myfilewidget.h"
+#include "ui_myfilewidget.h"
+#include "mymenu.h"
+#include "common.h"
 #include <QListView>
 #include <QDebug>
 #include <QAction>
@@ -13,7 +16,10 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
-
+#include "logininfoinstance.h"
+#include <QWidget>
+#include "networkdata.h"
+#include "common.h"
 
 namespace Ui {
 class MyFileWidget;
@@ -27,13 +33,35 @@ public:
     explicit MyFileWidget(QWidget *parent = nullptr);
     ~MyFileWidget();
 
+signals:
+    sigLoginAgain();
+
 private slots:
     void onRightMenu(const QPoint &pos);
 
 private:
     Ui::MyFileWidget *ui;
-    void initListWidget();
+    MyMenu *m_menuItem;
+    QAction *m_actionDownload;
+    QAction *m_actionShare;
+    QAction *m_actionDelete;
+    QAction *m_actionProperty;
+    MyMenu *m_menuEmpty;
+    QAction *m_actionDownloadAsc;
+    QAction *m_actionDownloadDesc;
+    QAction *m_actionRefresh;
+    QAction *m_actionUpload;
+    Common *m_common;
+    LoginInfoInstance *m_loginInfo;
+    QNetworkAccessManager *m_manager;
+    enum MyFileDisplay { Normal, Asc, Desc};
+    int m_myFilesCount;
 
+
+    void initListWidget();
+    void addMenu();
+    void menuActions();
+    void getMyFileCount(MyFileDisplay cmd);
 
 
 };

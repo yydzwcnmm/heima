@@ -24,6 +24,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     myfilewidget.cpp \
+    mymenu.cpp \
+    networkdata.cpp \
     titlewidget.cpp
 
 HEADERS += \
@@ -34,6 +36,8 @@ HEADERS += \
     logininfoinstance.h \
     mainwindow.h \
     myfilewidget.h \
+    mymenu.h \
+    networkdata.h \
     titlewidget.h
 
 FORMS += \

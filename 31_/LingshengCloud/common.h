@@ -3,7 +3,7 @@
 
 #include <QString>
 #include "des.h"
-
+#include <QNetworkAccessManager>
 
 // 正则表达式
 #define USER_REG        "^[a-zA-Z\\d_@#-\*]\{3,16\}$"
@@ -24,7 +24,7 @@ class Common
 private:
     Common();
     static Common* m_instance;
-
+    QNetworkAccessManager *m_manager;
 public:
     static Common* getInstance();
 
@@ -39,6 +39,8 @@ public:
 
     //md5加密字符串
     QString getStrMd5(QString str);
+
+    QNetworkAccessManager* getNetworkAccessManager();
 
 };
 
