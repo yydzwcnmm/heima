@@ -111,9 +111,11 @@ void MyFileWidget::menuActions()
     //点击空白位置显示的菜单
     connect(m_actionDownloadAsc,&QAction::triggered,this,[=](){
         qDebug()<<"按下载量升序";
+        getMyFileCount(Asc);
     });
     connect(m_actionDownloadDesc,&QAction::triggered,this,[=](){
         qDebug()<<"按下载量降序";
+        getMyFileCount(Desc);
     });
     connect(m_actionRefresh,&QAction::triggered,this,[=](){
         qDebug()<<"刷新";
@@ -153,7 +155,8 @@ void MyFileWidget::getMyFileCount(MyFileDisplay cmd)
     QNetworkRequest request; //栈
     QString ip = m_common->getConfValue("web_server", "ip");
     QString port = m_common->getConfValue("web_server", "port");
-    m_manager = new QNetworkAccessManager(this);
+    //m_manager = new QNetworkAccessManager(this);
+    m_manager = m_common->getNetworkAccessManager();
     //http://192.168.52.139/myfiles?cmd=count
     QString url = QString("http://%1:%2/myfiles?cmd=count").arg(ip).arg(port);
     request.setUrl(url);
@@ -197,8 +200,10 @@ void MyFileWidget::getMyFileCount(MyFileDisplay cmd)
 
         if(m_myFilesCount>0){
             //请求用户文件信息
+            getMyFileList(Normal);
         }else {
             //用户文件数量等于0
+
         }
 
         //立即销毁
@@ -211,3 +216,105 @@ void MyFileWidget::getMyFileCount(MyFileDisplay cmd)
     });
 }
 
+void MyFileWidget::getMyFileList(MyFileDisplay cmd)
+{
+
+    QString strCmd;
+    if(cmd == MyFileDisplay::Normal){
+        strCmd = "normal";
+    }
+    if(cmd == MyFileDisplay::Desc){
+        strCmd = "pvdesc";
+    }
+    if(cmd == MyFileDisplay::Asc){
+        strCmd = "pvasc";
+    }
+    qDebug()<<"IN getMyFileList "<<strCmd;
+
+    QNetworkRequest request; //栈
+    QString ip = m_common->getConfValue("web_server", "ip");
+    QString port = m_common->getConfValue("web_server", "port");
+    m_manager = m_common->getNetworkAccessManager();
+    //http://192.168.52.139/myfiles?cmd=normal
+    //http://192.168.52.139/myfiles?cmd=asc
+    //http://192.168.52.139/myfiles?cmd=pvasc
+    QString url = QString("http://%1:%2/myfiles?cmd=%3").arg(ip).arg(port).arg(strCmd);
+    request.setUrl(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
+
+    QJsonObject paramsObj;
+    paramsObj.insert("user", m_loginInfo->user());
+    paramsObj.insert("token", m_loginInfo->token());
+    QJsonDocument doc(paramsObj);
+    QByteArray data = doc.toJson();
+    QNetworkReply *reply = m_manager->post(request, data);
+/***
+    "files": [{
+    "user": "milo",
+    "md5": "a89390d867d5da18c8b1a95908d7c653",
+    "create_time": "2020-07-04 14:26:41",
+    "file_name": "ui_buttongroup.h",
+    "share_status": 1,
+    "pv": 0,
+    "url": "http://172.16.0.15:80/group1/M00/00/00/rBAAD18AISGAP6QrAAACRhizVvQ79062.h",
+    "size": 582,
+    "type": "h"
+    }]
+ ***/
+
+    //读取服务器返回的数据
+    connect(reply, &QNetworkReply::readyRead, this, [=](){
+        //读数据
+        QByteArray data = reply->readAll();
+        qDebug() << "服务器返回数据:" << QString(data);
+        QJsonParseError err;
+        //解析返回数据
+        QJsonDocument rootDoc = QJsonDocument::fromJson(data, &err);
+        if (err.error != QJsonParseError::NoError) {
+            qDebug() << "Json格式错误";
+        }else {
+            //解析json
+            QJsonObject rootObj = rootDoc.object();
+            QJsonValue filesValue = rootObj.value("files");
+            if(filesValue.type() == QJsonValue::Array){
+                QJsonArray filesArr  = filesValue.toArray();
+                for(int i=0;i<filesArr.count();i++){
+                    QJsonValue fileValue = filesArr.at(i);
+                    if(filesValue.type()==QJsonValue::Object){
+                        QJsonObject fileObj = fileValue.toObject();
+                        QJsonValue userValue = fileObj.value("user");
+                        qDebug()<<userValue.toString();
+                        QJsonValue md5Value = fileObj.value("md5");
+                        qDebug()<<md5Value.toString();
+                        QJsonValue create_timeValue = fileObj.value("create_time");
+                        qDebug()<<create_timeValue.toString();
+                        QJsonValue file_nameValue = fileObj.value("file_name");
+                        qDebug()<<file_nameValue.toString();
+                        QJsonValue share_statusValue = fileObj.value("share_status");
+                        qDebug()<<share_statusValue.toString();
+                        QJsonValue pvValue = fileObj.value("pv");
+                        qDebug()<<pvValue.toString();
+                        QJsonValue urlValue = fileObj.value("url");
+                        qDebug()<<urlValue.toString();
+                        QJsonValue sizeValue = fileObj.value("size");
+                        qDebug()<<sizeValue.toString();
+                        QJsonValue typeValue = fileObj.value("type");
+                        qDebug()<<typeValue.toString();
+                   }
+                }
+            }
+
+        }
+
+
+        //立即销毁
+        //delete reply;
+        //延迟销毁,
+        //调用QObject::deleteLater并没有立即校徽，而是向主消息循环发送了一个event,
+        //下一次主循环收到这个event之后才会销毁对象。
+        reply->deleteLater();
+
+    });
+
+
+}

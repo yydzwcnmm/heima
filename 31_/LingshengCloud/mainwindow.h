@@ -32,5 +32,8 @@ signals:
     //切换用户
     void sigChangeUser();
 
+    void sigLoginAgain();
+
+
 };
 #endif // MAINWINDOW_H

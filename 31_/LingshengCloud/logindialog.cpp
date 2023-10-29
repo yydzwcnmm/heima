@@ -34,6 +34,11 @@ LoginDialog::LoginDialog(QWidget *parent) :
                 this->show();
               }
             );
+    connect(m_mainwindow,&MainWindow::sigLoginAgain,this,[=](){
+               //重新登录
+        m_mainwindow->hide();
+        this->show();
+    });
 }
 
 void LoginDialog::onshowSetPage()

@@ -57,12 +57,11 @@ private:
     enum MyFileDisplay { Normal, Asc, Desc};
     int m_myFilesCount;
 
-
     void initListWidget();
     void addMenu();
     void menuActions();
-    void getMyFileCount(MyFileDisplay cmd);
-
+    void getMyFileCount(MyFileDisplay cmd = Normal);
+    void getMyFileList(MyFileDisplay cmd = Normal);
 
 };
 

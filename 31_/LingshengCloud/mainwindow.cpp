@@ -51,7 +51,9 @@ void MainWindow::buttonsSignals()
     connect(ui->button_group,&ButtonGroup::sigSwitchUser,this,[=](){
             emit sigChangeUser();
     });
-
+    connect(ui->myFile_page,&MyFileWidget::sigLoginAgain,this,[=](){
+            emit sigLoginAgain();
+    });
 
 }
 

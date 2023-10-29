@@ -10,7 +10,7 @@ Common* Common::m_instance = new Common;
 
 Common::Common()
 {
-
+    m_manager = new QNetworkAccessManager();
 }
 
 Common* Common::getInstance()
@@ -208,5 +208,6 @@ QString Common::getStrMd5(QString str)
 }
 QNetworkAccessManager* Common::getNetworkAccessManager()
 {
+
     return m_manager;
 }
