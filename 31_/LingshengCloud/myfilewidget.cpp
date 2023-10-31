@@ -177,15 +177,8 @@ void MyFileWidget::getMyFileCount(MyFileDisplay cmd)
         //读数据
         QByteArray data = reply->readAll();
         qDebug() << "服务器返回数据:" << QString(data);
-/***
-        QJsonParseError err;
-        //解析返回数据
-        QJsonDocument rootDoc = QJsonDocument::fromJson(data, &err);
-        if (err.error != QJsonParseError::NoError) {
-            qDebug() << "Json格式错误";
-        }
-***/
-        QStringList list = NetworkData::getFileCount(data);
+
+                QStringList list = NetworkData::getFileCount(data);
         if(!list.isEmpty()){
             QString code = list.at(0);
             if(code == "110"){   //成功
@@ -266,45 +259,20 @@ void MyFileWidget::getMyFileList(MyFileDisplay cmd)
     connect(reply, &QNetworkReply::readyRead, this, [=](){
         //读数据
         QByteArray data = reply->readAll();
+        //
+
         qDebug() << "服务器返回数据:" << QString(data);
-        QJsonParseError err;
-        //解析返回数据
-        QJsonDocument rootDoc = QJsonDocument::fromJson(data, &err);
-        if (err.error != QJsonParseError::NoError) {
-            qDebug() << "Json格式错误";
-        }else {
-            //解析json
-            QJsonObject rootObj = rootDoc.object();
-            QJsonValue filesValue = rootObj.value("files");
-            if(filesValue.type() == QJsonValue::Array){
-                QJsonArray filesArr  = filesValue.toArray();
-                for(int i=0;i<filesArr.count();i++){
-                    QJsonValue fileValue = filesArr.at(i);
-                    if(filesValue.type()==QJsonValue::Object){
-                        QJsonObject fileObj = fileValue.toObject();
-                        QJsonValue userValue = fileObj.value("user");
-                        qDebug()<<userValue.toString();
-                        QJsonValue md5Value = fileObj.value("md5");
-                        qDebug()<<md5Value.toString();
-                        QJsonValue create_timeValue = fileObj.value("create_time");
-                        qDebug()<<create_timeValue.toString();
-                        QJsonValue file_nameValue = fileObj.value("file_name");
-                        qDebug()<<file_nameValue.toString();
-                        QJsonValue share_statusValue = fileObj.value("share_status");
-                        qDebug()<<share_statusValue.toString();
-                        QJsonValue pvValue = fileObj.value("pv");
-                        qDebug()<<pvValue.toString();
-                        QJsonValue urlValue = fileObj.value("url");
-                        qDebug()<<urlValue.toString();
-                        QJsonValue sizeValue = fileObj.value("size");
-                        qDebug()<<sizeValue.toString();
-                        QJsonValue typeValue = fileObj.value("type");
-                        qDebug()<<typeValue.toString();
-                   }
-                }
-            }
+        qDebug() << "/////////";
+        QList<FileInfo*>list = NetworkData::getFileInfo(data);
+
+        for(int i=0;i<list.length();i++){
+          qDebug() << list.at(i)->md5;
+           qDebug() << list.at(i)->url;
+           qDebug() << list.at(i)->fileName;
 
         }
+
+
 
 
         //立即销毁

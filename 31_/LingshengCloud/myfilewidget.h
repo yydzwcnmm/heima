@@ -20,6 +20,7 @@
 #include <QWidget>
 #include "networkdata.h"
 #include "common.h"
+#include "networkdata.h"
 
 namespace Ui {
 class MyFileWidget;
