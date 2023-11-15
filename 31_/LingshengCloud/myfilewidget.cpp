@@ -58,6 +58,9 @@ void MyFileWidget::initListWidget()
     }else{
         //点击了图标
          qDebug() << "clieck";
+         if(item->text() == "上传文件"){
+             return;
+         }
          m_menuItem->exec(QCursor::pos()); //QCursor::pos() 鼠标当前位置
     }
 
@@ -100,9 +103,11 @@ void MyFileWidget::menuActions()
     });
     connect(m_actionShare,&QAction::triggered,this,[=](){
         qDebug()<<"分享";
+        dealfile("share");
     });
     connect(m_actionDelete,&QAction::triggered,this,[=](){
         qDebug()<<"删除";
+        dealfile("delete");
     });
     connect(m_actionProperty,&QAction::triggered,this,[=](){
         qDebug()<<"属性";
@@ -176,7 +181,7 @@ void MyFileWidget::getMyFileCount(MyFileDisplay cmd)
     connect(reply, &QNetworkReply::readyRead, this, [=](){
         //读数据
         QByteArray data = reply->readAll();
-        qDebug() << "服务器返回数据:" << QString(data);
+       // qDebug() << "服务器返回数据:" << QString(data);
 
                 QStringList list = NetworkData::getFileCount(data);
         if(!list.isEmpty()){
@@ -208,6 +213,13 @@ void MyFileWidget::getMyFileCount(MyFileDisplay cmd)
 
     });
 }
+
+void MyFileWidget::addUploadItem()
+{
+    QString filePath = QString(":/images/main/upload.png");
+    ui->listWidget->addItem(new QListWidgetItem(QIcon(filePath), QString("上传文件")));
+}
+
 
 void MyFileWidget::getMyFileList(MyFileDisplay cmd)
 {
@@ -255,25 +267,26 @@ void MyFileWidget::getMyFileList(MyFileDisplay cmd)
     }]
  ***/
 
+
+
+
     //读取服务器返回的数据
     connect(reply, &QNetworkReply::readyRead, this, [=](){
         //读数据
         QByteArray data = reply->readAll();
-        //
+
 
         qDebug() << "服务器返回数据:" << QString(data);
         qDebug() << "/////////";
-        QList<FileInfo*>list = NetworkData::getFileInfo(data);
+        //清空m_fileList
+        clearFileList();
+        m_fileList = NetworkData::getFileInfo(data);
 
-        for(int i=0;i<list.length();i++){
-          qDebug() << list.at(i)->md5;
-           qDebug() << list.at(i)->url;
-           qDebug() << list.at(i)->fileName;
+        //清空ui->listWidget中items
+        clearItems();
 
-        }
-
-
-
+        //在ui->listWidget显示图标
+        showFileItems();
 
         //立即销毁
         //delete reply;
@@ -281,8 +294,196 @@ void MyFileWidget::getMyFileList(MyFileDisplay cmd)
         //调用QObject::deleteLater并没有立即校徽，而是向主消息循环发送了一个event,
         //下一次主循环收到这个event之后才会销毁对象。
         reply->deleteLater();
-
     });
 
-
 }
+
+void MyFileWidget::showFileItems()
+{
+
+    for(int i=0;i<m_fileList.length();i++)
+    {
+        FileInfo *fileInfo = m_fileList.at(i);
+        QString fileTypeName = QString("%1.png").arg(fileInfo->type);
+        QString fileTypeName2 = m_common->getFileType(fileTypeName);
+        qDebug() << "showFileItems fileTypeName2 1:" << fileTypeName2;
+        QString filePath = QString("%1/%2").arg(FILE_TYPE_DIR).arg(fileTypeName2);
+        //添加items(图片/文字)到listWidget
+        ui->listWidget->addItem(new QListWidgetItem(QIcon(filePath), fileInfo->fileName));
+        qDebug() << "filePath:" << filePath;
+    }
+    //添加上传文件图标
+    this->addUploadItem();
+}
+
+void MyFileWidget::clearFileList()
+{
+    int size = m_fileList.size();
+    for(int i=0;i<size;i++)
+    {
+        FileInfo *temp = m_fileList.takeFirst();
+        if(temp != nullptr){
+            delete temp;
+        }
+    }
+}
+
+void MyFileWidget::clearItems()
+{
+    int count = ui->listWidget->count();
+    for (int i=0;i<count;i++){
+        QListWidgetItem *item = ui->listWidget->takeItem(0);
+        if(item!=nullptr){
+            delete item;
+        }
+    }
+}
+
+//分享文件 删除文件接口函数
+void MyFileWidget::dealfile(QString cmd)
+{
+    //获取当前选中的item
+    QListWidgetItem *item = ui->listWidget->currentItem();
+    if(item == NULL){
+        qDebug()<<"选中item NULL";
+        return;
+    }
+    for(int i=0;i<m_fileList.length();i++){
+        FileInfo *fileInfo = m_fileList.at(i);
+        qDebug() << "fileInfo->fileName:" << fileInfo->fileName << "   item->text():" << item->text();
+        if(fileInfo->fileName == item->text()){
+            //分享文件
+            if(cmd == "share"){
+                //分享文件
+                shareFile(fileInfo);
+            }
+            if(cmd == "delete"){
+                //删除文件
+                deleteFile(fileInfo);
+            }
+        }
+    }
+}
+
+
+//分享文件
+void MyFileWidget::shareFile(FileInfo *fileInfo)
+{
+    qDebug() << " in shareFile";
+    QNetworkRequest request;
+    QString ip = m_common->getConfValue("web_server", "ip");
+    QString port = m_common->getConfValue("web_server", "port");
+    //http://192.168.52.139/dealfile?cmd=share
+    QString url = QString("http://%1:%2/dealfile?cmd=share").arg(ip).arg(port);
+    request.setUrl(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
+
+    QJsonObject paramsObj;
+    paramsObj.insert("user", m_loginInfo->user());
+    paramsObj.insert("token", m_loginInfo->token());
+    paramsObj.insert("filename",fileInfo->fileName);
+    paramsObj.insert("md5",fileInfo->md5);
+    QJsonDocument doc(paramsObj);
+    QByteArray data = doc.toJson();
+    //qDebug() << " in QByteArray data = doc.toJson(); ";
+    QNetworkReply *reply = m_manager->post(request, data);
+    //读取服务器返回的数据
+    connect(reply, &QNetworkReply::readyRead, this, [=](){
+        //读数据
+        //qDebug() << " in 读取服务器返回的数据 ";
+        QByteArray data = reply->readAll();
+        qDebug() << "服务器返回数据:" << QString(data);
+        QString code = NetworkData::getCode(data);
+/*
+        010： 成功
+        011： 失败
+        012： 别人已经分享此文件
+        013： token验证失败
+*/
+        if(code=="010"){//成功
+            fileInfo->shareStatus = 1;
+            QMessageBox::information(this, "分享成功", QString("【%1】分享成功!").arg(fileInfo->fileName));
+        }
+        if(code=="011"){
+            QMessageBox::warning(this, "分享失败", QString("【%1】分享失败!").arg(fileInfo->fileName));
+        }
+        if(code=="012"){
+            QMessageBox::warning(this, "分享失败", QString("【%1】别人已经分享此文件!").arg(fileInfo->fileName));
+        }
+        if(code=="013"){
+            QMessageBox::critical(this, "账号异常", "请重新登录");
+            emit sigLoginAgain();
+            return;
+        }
+         delete reply;
+    });
+}
+
+//文件删除
+void MyFileWidget::deleteFile(FileInfo *fileInfo)
+{
+    qDebug() << " in deleteFile(FileInfo *fileInfo) ";
+    QNetworkRequest request;
+    QString ip = m_common->getConfValue("web_server", "ip");
+    QString port = m_common->getConfValue("web_server", "port");
+
+    //http://192.168.52.139/dealfile?cmd=del
+    QString url = QString("http://%1:%2/dealfile?cmd=del").arg(ip).arg(port);
+    request.setUrl(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
+
+/*
+{
+    "filename": "Makefile",
+    "md5": "602fdf30db2aacf517badf4565124f51",
+    "token": "ecf3ac6f8863cd17ed1d3909c4386684",
+    "user": "milo"
+}
+*/
+    QJsonObject paramsObj;
+    paramsObj.insert("user", m_loginInfo->user());
+    paramsObj.insert("token", m_loginInfo->token());
+    paramsObj.insert("filename", fileInfo->fileName);
+    paramsObj.insert("md5", fileInfo->md5);
+    QJsonDocument doc(paramsObj);
+
+    QByteArray data = doc.toJson();
+    QNetworkReply *reply = m_manager->post(request, data);
+    qDebug() << " in  QNetworkReply *reply = m_manager->post(request, data); ";
+    //读取服务器返回的数据
+    connect(reply, &QNetworkReply::readyRead, this, [=](){
+            //读数据
+        qDebug() << " in  connect(reply, &QNetworkReply::readyRead, this, [=](){ ";
+        QByteArray data = reply->readAll();
+        qDebug() << "服务器返回数据:" << QString(data);
+        QString code = NetworkData::getCode(data);
+        if (code == "014") {  //失败
+               QMessageBox::warning(this, "文件删除失败", QString("【%1】文件删除失败!").arg(fileInfo->fileName));
+        }else if(code == "013"){
+               QMessageBox::information(this, "文件删除成功", QString("【%1】文件删除成功!").arg(fileInfo->fileName));
+               for(int i=0;i<m_fileList.size();i++){
+                   if(m_fileList.at(i)->fileName==fileInfo->fileName){
+                       //获取对应的 listWidget
+                       for(int k = 0;k<ui->listWidget->count();k++){
+                           QListWidgetItem *item = ui->listWidget->item(k);
+                           if(item->text()==fileInfo->fileName){
+                               //删除listWidget上的图标
+                               ui->listWidget->removeItemWidget(item);
+                                delete item;
+                               break;
+                           }
+                       }
+                    m_fileList.removeAt(i);
+                    free(fileInfo);
+                    //delete reply;
+                    break;
+                   }
+               }
+        }
+         delete reply;
+    });
+    //delete reply;
+}
+
+
+

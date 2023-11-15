@@ -22,6 +22,7 @@
 #include "common.h"
 #include "networkdata.h"
 
+
 namespace Ui {
 class MyFileWidget;
 }
@@ -57,12 +58,22 @@ private:
     QNetworkAccessManager *m_manager;
     enum MyFileDisplay { Normal, Asc, Desc};
     int m_myFilesCount;
+    QList<FileInfo*>m_fileList;
+
 
     void initListWidget();
     void addMenu();
     void menuActions();
     void getMyFileCount(MyFileDisplay cmd = Normal);
     void getMyFileList(MyFileDisplay cmd = Normal);
+    void addUploadItem();
+    void showFileItems();
+    void clearFileList();
+    void clearItems();
+    void dealfile(QString cmd);
+    void shareFile(FileInfo *FileInfo);
+    void deleteFile(FileInfo *fileInfo);
+
 
 };
 

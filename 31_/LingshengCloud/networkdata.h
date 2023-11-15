@@ -41,6 +41,7 @@ public:
     //static FileInfo* fileInfo;
     static QStringList getFileCount(QByteArray json);
     static QList<FileInfo*> getFileInfo(QByteArray json);
+    static QString getCode(QByteArray json);
 signals:
 
 

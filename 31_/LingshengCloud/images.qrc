@@ -58,7 +58,6 @@
         <file>conf/fileType/settings.png</file>
         <file>conf/fileType/tar.png</file>
         <file>conf/fileType/test.jpg</file>
-        <file>conf/fileType/text.png</file>
         <file>conf/fileType/tiff.png</file>
         <file>conf/fileType/url.png</file>
         <file>conf/fileType/vsd.png</file>
@@ -68,5 +67,6 @@
         <file>conf/fileType/xlsx.png</file>
         <file>conf/fileType/xlsx_mac.png</file>
         <file>conf/fileType/zip.png</file>
+        <file>conf/fileType/txt.png</file>
     </qresource>
 </RCC>

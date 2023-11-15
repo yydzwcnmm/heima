@@ -96,3 +96,19 @@ NetworkData::NetworkData(QObject *parent) : QObject(parent)
      qDebug() << "11111111111:";
      return list;
  }
+ QString NetworkData::getCode(QByteArray json)
+ {
+     QString code;
+     QJsonParseError err;
+     //解析返回数据
+     QJsonDocument rootDoc = QJsonDocument::fromJson(json,&err);
+     if(err.error != QJsonParseError::NoError){
+         qDebug() << "Json格式错误";
+     }else {
+         //解析json
+         QJsonObject rootObj = rootDoc.object();
+         QJsonValue codeValue = rootObj.value("code");
+         code = codeValue.toString();
+     }
+     return code;
+ }

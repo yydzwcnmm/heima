@@ -11,6 +11,7 @@ Common* Common::m_instance = new Common;
 Common::Common()
 {
     m_manager = new QNetworkAccessManager();
+    getFileTypeList();
 }
 
 Common* Common::getInstance()
@@ -210,4 +211,55 @@ QNetworkAccessManager* Common::getNetworkAccessManager()
 {
 
     return m_manager;
+}
+
+void Common::getFileTypeList()
+{
+    QDir dir(FILE_TYPE_DIR);
+    if(!dir.exists()){
+        dir.mkpath(FILE_TYPE_DIR);
+        qDebug()<<FILE_TYPE_DIR<<"创建成功";
+    }
+    /*
+            QDir::Dirs      列出目录；
+            QDir::AllDirs   列出所有目录，不对目录名进行过滤；
+            QDir::Files     列出文件；
+            QDir::Drives    列出逻辑驱动器名称，该枚举变量在Linux/Unix中将被忽略；
+            QDir::NoSymLinks        不列出符号链接；
+            QDir::NoDotAndDotDot    不列出文件系统中的特殊文件.及..；
+            QDir::NoDot             不列出.文件，即指向当前目录的软链接
+            QDir::NoDotDot          不列出..文件；
+            QDir::AllEntries        其值为Dirs | Files | Drives，列出目录、文件、驱动器及软链接等所有文件；
+            QDir::Readable      列出当前应用有读权限的文件或目录；
+            QDir::Writable      列出当前应用有写权限的文件或目录；
+            QDir::Executable    列出当前应用有执行权限的文件或目录；
+            Readable、Writable及Executable均需要和Dirs或Files枚举值联合使用；
+            QDir::Modified      列出已被修改的文件，该值在Linux/Unix系统中将被忽略；
+            QDir::Hidden        列出隐藏文件；
+            QDir::System        列出系统文件；
+            QDir::CaseSensitive 设定过滤器为大小写敏感。
+        */
+
+    dir.setFilter(QDir::Files|QDir::NoDot|QDir::NoDot|QDir::NoDotAndDotDot | QDir::NoSymLinks);
+    dir.setSorting(QDir::Size);
+    //遍历文件夹(conf/fileType)
+    QFileInfoList fileInfoList = dir.entryInfoList();
+    for(int i=0;i<fileInfoList.size();i++){
+        QFileInfo fileInfo = fileInfoList.at(i);
+        m_fileTypeList.append(fileInfo.fileName());
+    }
+}
+
+
+//根据文件名，从m_fileTypeList查找，如果能找到，返回此类型，如果不能找到,返回other.png
+//fileTypeName  cpp.png/dll.png
+
+QString Common::getFileType(QString fileTypeName)
+{
+    if(m_fileTypeList.contains(fileTypeName)){
+        //如果能找到
+        return fileTypeName;
+    }else {
+        return "other.png";
+    }
 }
