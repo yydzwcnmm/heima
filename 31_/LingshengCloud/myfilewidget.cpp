@@ -111,6 +111,7 @@ void MyFileWidget::menuActions()
     });
     connect(m_actionProperty,&QAction::triggered,this,[=](){
         qDebug()<<"属性";
+        dealfile("property");
     });
 
     //点击空白位置显示的菜单
@@ -361,6 +362,10 @@ void MyFileWidget::dealfile(QString cmd)
                 //删除文件
                 deleteFile(fileInfo);
             }
+            if(cmd == "property"){
+                //显示文件信息
+                showFileProperty(fileInfo);
+            }
         }
     }
 }
@@ -485,5 +490,13 @@ void MyFileWidget::deleteFile(FileInfo *fileInfo)
     //delete reply;
 }
 
+void MyFileWidget::showFileProperty(FileInfo *fileInfo)
+{
+    //显示文件信息
+    FilePropertyInfoDialog dlg;
+    dlg.setFileInfo(fileInfo);
+    dlg.exec();
+    //通过模态对话框显示
+}
 
 

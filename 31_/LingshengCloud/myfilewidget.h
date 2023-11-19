@@ -21,6 +21,7 @@
 #include "networkdata.h"
 #include "common.h"
 #include "networkdata.h"
+#include "filepropertyinfodialog.h"
 
 
 namespace Ui {
@@ -73,6 +74,7 @@ private:
     void dealfile(QString cmd);
     void shareFile(FileInfo *FileInfo);
     void deleteFile(FileInfo *fileInfo);
+    void showFileProperty(FileInfo *fileInfo);
 
 
 };

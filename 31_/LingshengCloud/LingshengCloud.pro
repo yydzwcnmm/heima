@@ -19,6 +19,7 @@ SOURCES += \
     buttongroup.cpp \
     common.cpp \
     des.c \
+    filepropertyinfodialog.cpp \
     logindialog.cpp \
     logininfoinstance.cpp \
     main.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     buttongroup.h \
     common.h \
     des.h \
+    filepropertyinfodialog.h \
     logindialog.h \
     logininfoinstance.h \
     mainwindow.h \
@@ -42,6 +44,7 @@ HEADERS += \
 
 FORMS += \
     buttongroup.ui \
+    filepropertyinfodialog.ui \
     logindialog.ui \
     mainwindow.ui \
     myfilewidget.ui \
