@@ -22,7 +22,7 @@
 #include "common.h"
 #include "networkdata.h"
 #include "filepropertyinfodialog.h"
-
+#include <QFileDialog>
 
 namespace Ui {
 class MyFileWidget;
@@ -60,12 +60,10 @@ private:
     enum MyFileDisplay { Normal, Asc, Desc};
     int m_myFilesCount;
     QList<FileInfo*>m_fileList;
-
-
     void initListWidget();
     void addMenu();
     void menuActions();
-    void getMyFileCount(MyFileDisplay cmd = Normal);
+
     void getMyFileList(MyFileDisplay cmd = Normal);
     void addUploadItem();
     void showFileItems();
@@ -75,7 +73,10 @@ private:
     void shareFile(FileInfo *FileInfo);
     void deleteFile(FileInfo *fileInfo);
     void showFileProperty(FileInfo *fileInfo);
+    void uploadFile();
 
+public:
+    void getMyFileCount(MyFileDisplay cmd = Normal);
 
 };
 

@@ -17,23 +17,18 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void setUser(QString user);
+    void init();
 
 private:
     //处理按钮信号
     void buttonsSignals();
-
     void windowSignals();
 
 private:
     Ui::MainWindow *ui;
-
-
 signals:
     //切换用户
     void sigChangeUser();
-
     void sigLoginAgain();
-
-
 };
 #endif // MAINWINDOW_H

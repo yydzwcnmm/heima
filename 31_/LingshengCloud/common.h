@@ -50,6 +50,8 @@ public:
     void getFileTypeList();
     //根据文件名，从m_fileTypeList查找，如果能找到，返回此类型，如果不能找到,返回other.png
     QString getFileType(QString fileTypeName);
+    // 获取某个文件的md5码
+    QString getFileMd5(QString filePath);
 
 };
 

@@ -38,8 +38,13 @@ void MyFileWidget::initListWidget()
     //listWidget右键菜单
     //发出QWidget::customContextMenuRequested() 信号
     ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-
     connect(ui->listWidget,&QListWidget::customContextMenuRequested,this,&MyFileWidget::onRightMenu);
+    connect(ui->listWidget,&QListWidget::itemPressed,this,[=](QListWidgetItem *item){
+        QString text = item->text();
+        if(text == "上传文件"){
+            uploadFile();
+        }
+    });
 }
 
 /***
@@ -499,4 +504,90 @@ void MyFileWidget::showFileProperty(FileInfo *fileInfo)
     //通过模态对话框显示
 }
 
+void MyFileWidget::uploadFile()
+{
+    //选择文件
+    QString filePath = QFileDialog::getOpenFileName();
+    qDebug()<<"filePath:"<<filePath;
+    //上传文件到服务器
+
+/*
+------WebKitFormBoundaryDQAR0QX1ojAyzAre\r\n
+Content-Disposition: form-data; name="file"; filename="logo.png"\r\n
+Content-Type: image/png\r\n
+\r\n
+真正的文件内容\r\n
+------WebKitFormBoundaryDQAR0QX1ojAyzAre
+*/
+    QFile file(filePath);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    //截取字符串
+    int pos = filePath.lastIndexOf("/", -1) + 1;
+    qDebug() << "pos:" << pos;
+    QString fileName = filePath.mid(pos);
+    qDebug() << "fileName:" << fileName;
+
+    LoginInfoInstance *login = LoginInfoInstance::getInstance();
+
+    QString randText = "DQAR0QX1ojAyzAre";
+    QString boundary = "------WebKitFormBoundary" + randText;
+
+    QByteArray data;
+    data.append(boundary);
+    data.append("\r\n");
+
+    data.append("Content-Disposition: form-data; ");
+    data.append(QString("user=\"%1\" filename=\"%2\" md5=\"%3\" size=%4")
+                .arg(login->user())
+                .arg(fileName)
+                .arg(m_common->getFileMd5(filePath))
+                .arg(file.size()));
+    data.append("\r\n");
+    data.append("Content-Type: application/octet-stream");
+    data.append("\r\n");
+    data.append("\r\n");
+
+
+    //上传文件
+    data.append(file.readAll());
+    data.append("\r\n");
+    data.append(boundary);
+
+    QString url = QString("http://%1:%2/upload").arg(login->ip()).arg(login->port());
+    QNetworkRequest request;
+    request.setUrl(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
+
+    //发送http请求
+    QNetworkReply *reply = m_manager->post(request, data);
+    if (reply == NULL) {
+        qDebug() << "请求失败";
+        return;
+    }
+
+    connect(reply, &QNetworkReply::finished, this, [=](){
+        //文件上传完成后
+        if (reply->error() != QNetworkReply::NoError) {
+            qDebug() << reply->errorString();
+        } else {
+            QByteArray json = reply->readAll();
+            qDebug() << "array:" <<QString(json);
+/*
+008: 上传成功
+009: 上传失败
+*/
+            QString code = NetworkData::getCode(json);
+            if (code == "008") {
+                qDebug() << "上传成功";
+                //刷新
+                getMyFileCount();
+
+            } else if (code == "009") {
+                qDebug() << "上传失败";
+            }
+
+        }
+        reply->deleteLater();
+    });
+}
 

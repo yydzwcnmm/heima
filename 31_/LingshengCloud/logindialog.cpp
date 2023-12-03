@@ -142,6 +142,7 @@ void LoginDialog::on_login_clicked()
                         //m_mainwindow->setUser(username);
                         m_mainwindow->show();
                         this->hide();
+                        m_mainwindow->init();
                         qDebug()<<"跳到主界面";
                         m_mainwindow->setUser(username);
 

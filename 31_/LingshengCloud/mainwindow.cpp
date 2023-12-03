@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     buttonsSignals();
     //处理窗口信号
     windowSignals();
+
 }
 
 MainWindow::~MainWindow()
@@ -81,4 +82,10 @@ void MainWindow::windowSignals()
     //关闭
     connect(ui->button_group, &ButtonGroup::closeWindow, this, &MainWindow::close);
 
+}
+
+void MainWindow::init()
+{
+    //初始化用户数据
+    ui->myFile_page->getMyFileCount();
 }
