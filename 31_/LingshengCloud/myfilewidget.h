@@ -6,6 +6,7 @@
 #include "mymenu.h"
 #include "common.h"
 #include <QListView>
+#include <QNetworkRequest>
 #include <QDebug>
 #include <QAction>
 #include <QNetworkAccessManager>
@@ -23,6 +24,8 @@
 #include "networkdata.h"
 #include "filepropertyinfodialog.h"
 #include <QFileDialog>
+#include "uploadtask.h"
+#include <QTimer>
 
 namespace Ui {
 class MyFileWidget;
@@ -60,10 +63,12 @@ private:
     enum MyFileDisplay { Normal, Asc, Desc};
     int m_myFilesCount;
     QList<FileInfo*>m_fileList;
+    UploadTask *m_uploadTask;
+    QTimer m_uploadFileTimer;
+
     void initListWidget();
     void addMenu();
     void menuActions();
-
     void getMyFileList(MyFileDisplay cmd = Normal);
     void addUploadItem();
     void showFileItems();
@@ -73,7 +78,11 @@ private:
     void shareFile(FileInfo *FileInfo);
     void deleteFile(FileInfo *fileInfo);
     void showFileProperty(FileInfo *fileInfo);
-    void uploadFile();
+    //void uploadFile();
+    void addUploadFiles();
+    void checkTaskList();
+    void uploadFilesAction();
+    void uploadFile(UploadFileInfo *uploadFileInfo);
 
 public:
     void getMyFileCount(MyFileDisplay cmd = Normal);

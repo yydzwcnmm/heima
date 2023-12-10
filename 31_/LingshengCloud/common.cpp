@@ -310,3 +310,20 @@ QString Common::getFileMd5(QString filePath)
     QByteArray md5 = ch.result();
     return md5.toHex();
 }
+QString Common::getBoundary()
+{
+    //随机生成16个字符
+    char randoms[] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+    //随机种子
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+    QString temp;
+    int len = strlen(randoms);
+    for(int i = 0;i<16;i++){
+        int rand = qrand()%len;
+        temp [i] = randoms[rand];
+    }
+    qDebug()<<"temp:"<<temp;
+    QString boundary = "------WebKitFormBoundary" + temp;
+    return boundary;
+
+}

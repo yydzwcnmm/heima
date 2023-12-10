@@ -27,7 +27,8 @@ SOURCES += \
     myfilewidget.cpp \
     mymenu.cpp \
     networkdata.cpp \
-    titlewidget.cpp
+    titlewidget.cpp \
+    uploadtask.cpp
 
 HEADERS += \
     buttongroup.h \
@@ -40,7 +41,8 @@ HEADERS += \
     myfilewidget.h \
     mymenu.h \
     networkdata.h \
-    titlewidget.h
+    titlewidget.h \
+    uploadtask.h
 
 FORMS += \
     buttongroup.ui \

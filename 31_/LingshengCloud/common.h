@@ -52,6 +52,8 @@ public:
     QString getFileType(QString fileTypeName);
     // 获取某个文件的md5码
     QString getFileMd5(QString filePath);
+    //获取分隔符
+    QString getBoundary();
 
 };
 
