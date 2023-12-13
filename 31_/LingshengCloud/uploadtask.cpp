@@ -53,9 +53,19 @@ UploadFileInfo* UploadTask::takeTask()
 void UploadTask::delUploadTask()
 {
     //上传完成后需要处理的
-    uploadFileInfo = m_fileList.takeAt(0);
-    if(uploadFileInfo!=NULL){
-        delete uploadFileInfo;
+    for (int i=0; i<m_fileList.size(); i++) {
+        UploadFileInfo *tmp = m_fileList.at(i);
+        if (tmp->uploadStatus == UPLOAD_FINISHED ||
+                tmp->uploadStatus == UPLOAD_FAILD ||
+                tmp->uploadStatus == UPLOAF_FILE_EXISTE) {
+            UploadFileInfo *uploadFileInfo = m_fileList.takeAt(0);
+            if (uploadFileInfo != NULL) {
+
+
+                //第三步
+                delete uploadFileInfo;
+            }
+        }
     }
 
 }

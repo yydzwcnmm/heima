@@ -40,7 +40,7 @@ private:
     //静态数据成员，类中声明，类外必须定义
     static UploadTask* m_instance;
     UploadFileInfo *temp;
-    UploadFileInfo *uploadFileInfo;
+
 
     UploadFileInfo *uploadFile = new UploadFileInfo;
     QList<UploadFileInfo*>m_fileList;

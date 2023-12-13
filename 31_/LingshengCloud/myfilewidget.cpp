@@ -139,6 +139,7 @@ void MyFileWidget::menuActions()
     });
     connect(m_actionUpload,&QAction::triggered,this,[=](){
         qDebug()<<"上传";
+        addUploadFiles();
     });
 
 }
@@ -484,7 +485,9 @@ void MyFileWidget::deleteFile(FileInfo *fileInfo)
                            if(item->text()==fileInfo->fileName){
                                //删除listWidget上的图标
                                ui->listWidget->removeItemWidget(item);
-                                delete item;
+                               delete item;
+
+                               getMyFileCount(Normal);
                                break;
                            }
                        }
@@ -750,7 +753,7 @@ void MyFileWidget::uploadFile(UploadFileInfo *uploadFileInfo)
                 uploadFileInfo->uploadStatus = UPLOAD_FINISHED;
                 //刷新
                 getMyFileCount();
-
+                qDebug() << "刷新成功";
             }
             if("009"== "code"){
                 qDebug() << "上传失败";
@@ -761,7 +764,7 @@ void MyFileWidget::uploadFile(UploadFileInfo *uploadFileInfo)
             UploadTask *uploadTask = UploadTask::getInstance();
             //删除任务
             uploadTask->delUploadTask();
-
+            qDebug() << "删除任务成功";
         }
         reply->deleteLater();
     });
