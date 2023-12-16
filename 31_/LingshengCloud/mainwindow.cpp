@@ -88,4 +88,5 @@ void MainWindow::init()
 {
     //初始化用户数据
     ui->myFile_page->getMyFileCount();
+
 }

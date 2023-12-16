@@ -69,7 +69,7 @@ private:
     void initListWidget();
     void addMenu();
     void menuActions();
-    void getMyFileList(MyFileDisplay cmd = Normal);
+
     void addUploadItem();
     void showFileItems();
     void clearFileList();
@@ -86,6 +86,7 @@ private:
 
 public:
     void getMyFileCount(MyFileDisplay cmd = Normal);
+    void getMyFileList(MyFileDisplay cmd = Normal);
 
 };
 

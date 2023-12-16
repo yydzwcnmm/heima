@@ -46,6 +46,7 @@ void MyFileWidget::initListWidget()
         if(text == "上传文件"){
             //uploadFile();
             //添加文件到上传任务列表
+
             addUploadFiles();
 
         }
@@ -69,7 +70,9 @@ void MyFileWidget::initListWidget()
         //点击了图标
          qDebug() << "clieck";
          if(item->text() == "上传文件"){
+             qDebug() << "需要上传文件名为："<<item->text();
              return;
+
          }
          m_menuItem->exec(QCursor::pos()); //QCursor::pos() 鼠标当前位置
     }
@@ -193,21 +196,21 @@ void MyFileWidget::getMyFileCount(MyFileDisplay cmd)
     connect(reply, &QNetworkReply::readyRead, this, [=](){
         //读数据
         QByteArray data = reply->readAll();
-       // qDebug() << "服务器返回数据:" << QString(data);
+       qDebug() << "服务器返回数据:" << QString(data);
 
-                QStringList list = NetworkData::getFileCount(data);
+        QStringList list = NetworkData::getFileCount(data);
         if(!list.isEmpty()){
             QString code = list.at(0);
+            qDebug() << "m_myFilesCount code:" <<code;
             if(code == "110"){   //成功
                 m_myFilesCount = list.at(1).toInt();
-                qDebug() << "m_myFilesCount:" << m_myFilesCount;
             }else if(code == "111") {
                 QMessageBox::critical(this,"账号异常", "请重新登录");
                 emit sigLoginAgain();
                 return ;
             }
         }
-
+        qDebug() << "m_myFilesCount:" << m_myFilesCount;
         if(m_myFilesCount>0){
             //请求用户文件信息
             getMyFileList(Normal);
@@ -235,7 +238,7 @@ void MyFileWidget::addUploadItem()
 
 void MyFileWidget::getMyFileList(MyFileDisplay cmd)
 {
-
+    qDebug()<<"getMyFileList(MyFileDisplay cmd)";
     QString strCmd;
     if(cmd == MyFileDisplay::Normal){
         strCmd = "normal";
@@ -262,6 +265,8 @@ void MyFileWidget::getMyFileList(MyFileDisplay cmd)
     QJsonObject paramsObj;
     paramsObj.insert("user", m_loginInfo->user());
     paramsObj.insert("token", m_loginInfo->token());
+    paramsObj.insert("start", 0);
+    paramsObj.insert("count", m_myFilesCount);
     QJsonDocument doc(paramsObj);
     QByteArray data = doc.toJson();
     QNetworkReply *reply = m_manager->post(request, data);
@@ -606,6 +611,10 @@ void MyFileWidget::addUploadFiles()
 {
     //发送信号
     QStringList filePathlist = QFileDialog::getOpenFileNames();
+    if(filePathlist.size()>6){
+        QMessageBox::warning(this, "上传警告", "文件数量最大为6个");
+        return ;
+    }
     for(int i=0;i<filePathlist.size();i++){
          QString filePath = filePathlist.at(i);
          //添加到上传任务列表
@@ -624,7 +633,7 @@ void MyFileWidget::checkTaskList()
         //上传文件处理，取出上传任务列表的首任务，上传完后，再取下一个任务
         uploadFilesAction();
     });
-    m_uploadFileTimer.start(5000);
+    m_uploadFileTimer.start(1000);
 }
 
 void MyFileWidget::uploadFilesAction()
@@ -673,7 +682,9 @@ void MyFileWidget::uploadFilesAction()
         QString code = NetworkData::getCode(data);
         if(code == "005"){   //上传的文件已存在,
           //删除已经完成的上传任务
+            uploadFileInfo->uploadStatus = UPLOAF_FILE_EXISTE;
             m_uploadTask->delUploadTask();
+
         }else if("006" == code){//秒传成功
             m_uploadTask->delUploadTask();
         }else if("007" ==code){//秒传失败

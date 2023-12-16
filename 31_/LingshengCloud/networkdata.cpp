@@ -47,7 +47,7 @@ NetworkData::NetworkData(QObject *parent) : QObject(parent)
      //解析返回数据
      QJsonDocument rootDoc = QJsonDocument::fromJson(json, &err);
      if (err.error != QJsonParseError::NoError) {
-         qDebug() << "Json格式错误";
+         qDebug() << "Json格式错误 NetworkData::getFileInfo(QByteArray json)";
      }else {
          //解析json
 

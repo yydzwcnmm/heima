@@ -42,7 +42,7 @@ private:
     UploadFileInfo *temp;
 
 
-    UploadFileInfo *uploadFile = new UploadFileInfo;
+
     QList<UploadFileInfo*>m_fileList;
     //判断任务列表是否为空
 

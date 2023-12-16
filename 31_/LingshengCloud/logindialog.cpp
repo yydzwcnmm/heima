@@ -119,7 +119,7 @@ void LoginDialog::on_login_clicked()
         QJsonParseError err;
         QJsonDocument rootDoc = QJsonDocument::fromJson(data,&err);
         if(err.error != QJsonParseError::NoError){
-            qDebug() << "Json格式错误";
+            qDebug() << "Json格式错误 on_btn_reg_clicked()";
         }else {
                 //解析json
                 QJsonObject rootObj = rootDoc.object();
@@ -281,7 +281,7 @@ void LoginDialog::on_btn_reg_clicked()
         //解析返回数据
         QJsonDocument rootDoc = QJsonDocument::fromJson(data,&err);
         if(err.error!=QJsonParseError::NoError){
-            qDebug()<<"Json格式错误";
+            qDebug()<<"Json格式错误 on_btn_reg_clicked";
         }else{
             //解析json
             //{\n\t\"code\":\t\"002\"\n}
