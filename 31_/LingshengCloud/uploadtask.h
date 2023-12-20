@@ -5,6 +5,8 @@
 #include "common.h"
 #include <QFileInfo>
 #include <QVBoxLayout>
+#include "filedataprogress.h"
+#include "uploadlayout.h".h"
 
 #define UPLOAD_NOT          0   //未上传
 #define UPLOADING           1   //正在上传
@@ -18,7 +20,7 @@ struct UploadFileInfo
     QString fileName;       //文件名称
     QString filePath;       //文件路径
     qint64 size;            //文件大小
-    //FileDataProgress *fdp;  //进度条
+    FileDataProgress *fdp;  //进度条
     int uploadStatus;       //0.未上传，1.正在上传，2.上传完成
 };
 

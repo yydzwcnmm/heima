@@ -53,7 +53,7 @@ signals:
     void closeWindow();
 
 
-private slots:
+public slots:
     //void on_btnMyFile_clicked();
     //void on_btnShare_clicked();
     //void on_btnDownload_clicked();

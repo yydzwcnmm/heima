@@ -16,6 +16,7 @@ public:
     explicit FilePropertyInfoDialog(QWidget *parent = nullptr);
     ~FilePropertyInfoDialog();
     void setFileInfo(FileInfo *fileInfo);
+    void setFileName(QString fileName);
 
 private:
     Ui::FilePropertyInfoDialog *ui;

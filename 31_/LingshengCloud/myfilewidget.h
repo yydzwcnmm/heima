@@ -41,6 +41,7 @@ public:
 
 signals:
     sigLoginAgain();
+    gotoTransform(TransformStatus status);
 
 private slots:
     void onRightMenu(const QPoint &pos);

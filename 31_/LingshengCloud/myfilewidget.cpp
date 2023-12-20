@@ -610,6 +610,7 @@ Content-Type: image/png\r\n
 void MyFileWidget::addUploadFiles()
 {
     //发送信号
+    emit gotoTransform(TransformStatus::Upload);
     QStringList filePathlist = QFileDialog::getOpenFileNames();
     if(filePathlist.size()>6){
         QMessageBox::warning(this, "上传警告", "文件数量最大为6个");
@@ -638,6 +639,8 @@ void MyFileWidget::checkTaskList()
 
 void MyFileWidget::uploadFilesAction()
 {
+
+
     //取出上传任务列表的首任务
     if(m_uploadTask->isEmpty()){
         qDebug() << "任务列表为空";
@@ -746,6 +749,14 @@ void MyFileWidget::uploadFile(UploadFileInfo *uploadFileInfo)
         qDebug() << "请求失败";
         return;
     }
+
+    //显示文件下载进度
+    connect(reply, &QNetworkReply::downloadProgress, this, [=](qint64 bytesSent, qint64 bytesTotal){
+        uploadFileInfo->fdp->setProgress(bytesSent/1024, bytesTotal/1024);
+
+    });
+
+
 
     connect(reply,&QNetworkReply::finished,this,[=](){
         //文件上传完成后

@@ -7,6 +7,11 @@ UploadTask::UploadTask()
 {
 
 }
+UploadTask::~UploadTask()
+{
+
+}
+
 
 UploadTask* UploadTask::getInstance(){
     return m_instance;
@@ -24,6 +29,11 @@ int UploadTask::appendUploadTask(QString filePath)
        qDebug()<<"文件太大，最大允许上传30M";
         return -1;
     }
+
+     //上传进度条（显示）, 将进度条UI显示在vLayout上
+    FileDataProgress *fdp = new FileDataProgress();
+
+
     //截取字符串
     qDebug()<<"判断文件的大小---成功";
     int pos = filePath.lastIndexOf("/",-1)+1;
@@ -41,8 +51,21 @@ int UploadTask::appendUploadTask(QString filePath)
     //uploadFile->uploadStatus = UP
     //m_fileList保存上传文件的列表
     qDebug()<<"m_fileList保存上传文件的列表---成功";
+
+
+    fdp->setFileName(uploadFile->fileName);
+
+    uploadFile->fdp = fdp;
+#if 0
+    qDebug()<<" QVBoxLayout *vLayout = UploadLayout::getInstance()->getUploadLayout();-----";
+    QVBoxLayout *vLayout = UploadLayout::getInstance()->getUploadLayout();
+    qDebug()<<" QVBoxLayout *vLayout = UploadLayout::getInstance()->getUploadLayout();---成功";
+    //每一个都添加最上面
+    vLayout->insertWidget(0,fdp);
+#endif
+    qDebug()<<" m_fileList.append(uploadFile);-------";
     m_fileList.append(uploadFile);
-    //delete uploadFile;
+    qDebug()<<" m_fileList.append(uploadFile);---成功";
     return 0;
     
 }
@@ -82,7 +105,6 @@ void UploadTask::delUploadTask()
         if(isEmpty()){
             qDebug()<<"上传列表为空";
         }else {
-
             qDebug()<<"上传列表不为空";
         }
 }

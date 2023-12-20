@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QMouseEvent>
 #include "buttongroup.h"
-
+#include "common.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -30,5 +30,8 @@ signals:
     //切换用户
     void sigChangeUser();
     void sigLoginAgain();
+private slots:
+    void onGotoTransform(TransformStatus status);
+
 };
 #endif // MAINWINDOW_H

@@ -13,6 +13,10 @@ Common::Common()
     m_manager = new QNetworkAccessManager();
     getFileTypeList();
 }
+Common::~Common()
+{
+
+}
 
 Common* Common::getInstance()
 {

@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     buttonsSignals();
     //处理窗口信号
     windowSignals();
+    connect(ui->myFile_page, &MyFileWidget::gotoTransform, this, &MainWindow::onGotoTransform);
 
 }
 
@@ -87,6 +88,14 @@ void MainWindow::windowSignals()
 void MainWindow::init()
 {
     //初始化用户数据
-    ui->myFile_page->getMyFileCount();
+    //ui->myFile_page->getMyFileCount();
+    ui->myFile_page->getMyFileList();
 
 }
+
+void MainWindow::onGotoTransform(TransformStatus status)
+{
+    ui->button_group->onMapperButtonsClicked("传输列表");
+
+}
+

@@ -21,11 +21,17 @@
 //配置文件路径
 #define FILE_TYPE_DIR   ":conf/fileType"
 
+enum TransformStatus {
+    Upload,
+    Download,
+    Record
+};
 
 class Common
 {
 private:
     Common();
+    ~Common();
     static Common* m_instance;
     QNetworkAccessManager *m_manager;
     QStringList m_fileTypeList;

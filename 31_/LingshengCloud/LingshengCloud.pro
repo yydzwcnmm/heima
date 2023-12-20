@@ -19,6 +19,7 @@ SOURCES += \
     buttongroup.cpp \
     common.cpp \
     des.c \
+    filedataprogress.cpp \
     filepropertyinfodialog.cpp \
     logindialog.cpp \
     logininfoinstance.cpp \
@@ -28,12 +29,15 @@ SOURCES += \
     mymenu.cpp \
     networkdata.cpp \
     titlewidget.cpp \
+    transformwidget.cpp \
+    uploadlayout.cpp \
     uploadtask.cpp
 
 HEADERS += \
     buttongroup.h \
     common.h \
     des.h \
+    filedataprogress.h \
     filepropertyinfodialog.h \
     logindialog.h \
     logininfoinstance.h \
@@ -42,15 +46,19 @@ HEADERS += \
     mymenu.h \
     networkdata.h \
     titlewidget.h \
+    transformwidget.h \
+    uploadlayout.h \
     uploadtask.h
 
 FORMS += \
     buttongroup.ui \
+    filedataprogress.ui \
     filepropertyinfodialog.ui \
     logindialog.ui \
     mainwindow.ui \
     myfilewidget.ui \
-    titlewidget.ui
+    titlewidget.ui \
+    transformwidget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
