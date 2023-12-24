@@ -23,21 +23,27 @@ void UploadLayout::setUploadLayout(QWidget *parent)
     //使用垂直布局
     QVBoxLayout *vLayout = new QVBoxLayout;
 
-#if 0
+
+#if 1
     m_vLayout = vLayout;
     //添加弹簧
-    m_vLayout->addStretch();
+    //m_vLayout->addStretch(2);
 
-    parent->setLayout(vLayout);
-    qDebug()<<" parent->setLayout(vLayout);";
+
+    qDebug()<<" parent->setLayout(vLayout);+++++++++++++++++++++++++";
+
 
 #endif
+#if 0
     for(int i=0;i<10;i++){
         FileDataProgress *f1 = new FileDataProgress;
         f1->setFileName(QString("I = %1").arg(i));
         vLayout->insertWidget(0,f1);
 
     }
+ #endif
+
+
     parent->setLayout(vLayout);
 
 }

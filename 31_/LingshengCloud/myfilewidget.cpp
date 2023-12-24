@@ -752,7 +752,12 @@ void MyFileWidget::uploadFile(UploadFileInfo *uploadFileInfo)
 
     //显示文件下载进度
     connect(reply, &QNetworkReply::downloadProgress, this, [=](qint64 bytesSent, qint64 bytesTotal){
-        uploadFileInfo->fdp->setProgress(bytesSent/1024, bytesTotal/1024);
+        if(bytesTotal >0){
+        uploadFileInfo->fdp->setProgress(bytesSent, bytesTotal);
+        qDebug()<<"bytesSent= "<<QString::number(bytesSent);
+        qint64 i=bytesSent/bytesTotal;
+        qDebug()<<"bytesSent/bytesTotal = "<<QString::number(i);
+        }
 
     });
 
@@ -775,9 +780,10 @@ void MyFileWidget::uploadFile(UploadFileInfo *uploadFileInfo)
                 uploadFileInfo->uploadStatus = UPLOAD_FINISHED;
                 //刷新
                 getMyFileCount();
+
                 qDebug() << "刷新成功";
             }
-            if("009"== "code"){
+            if("009"== code){
                 qDebug() << "上传失败";
                 uploadFileInfo->uploadStatus = UPLOAD_FAILD;
 
