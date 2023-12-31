@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include "uploadlayout.h"
+#include "common.h"
+#include <downloadlayout.h>
+
 
 namespace Ui {
 class TransformWidget;
@@ -18,6 +21,11 @@ public:
 
 private:
     Ui::TransformWidget *ui;
+
+public:
+    void showPage(TransformStatus status);
+
+
 };
 
 #endif // TRANSFORMWIDGET_H

@@ -96,6 +96,7 @@ void MainWindow::init()
 void MainWindow::onGotoTransform(TransformStatus status)
 {
     ui->button_group->onMapperButtonsClicked("传输列表");
+    ui->transform_page->showPage(status);
 
 }
 

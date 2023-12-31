@@ -26,6 +26,8 @@
 #include <QFileDialog>
 #include "uploadtask.h"
 #include <QTimer>
+#include "downloadtask.h"
+#include <QUrl>
 
 namespace Ui {
 class MyFileWidget;
@@ -66,11 +68,13 @@ private:
     QList<FileInfo*>m_fileList;
     UploadTask *m_uploadTask;
     QTimer m_uploadFileTimer;
+    DownloadTask *m_downloadTask;
+    QTimer m_downloadFileTimer;
 
+private:
     void initListWidget();
     void addMenu();
     void menuActions();
-
     void addUploadItem();
     void showFileItems();
     void clearFileList();
@@ -84,10 +88,13 @@ private:
     void checkTaskList();
     void uploadFilesAction();
     void uploadFile(UploadFileInfo *uploadFileInfo);
+    void addDownloadFiles();
+    void downloadFilesAction();
 
 public:
     void getMyFileCount(MyFileDisplay cmd = Normal);
     void getMyFileList(MyFileDisplay cmd = Normal);
+
 
 };
 

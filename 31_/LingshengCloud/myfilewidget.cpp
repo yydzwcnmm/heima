@@ -12,6 +12,7 @@ MyFileWidget::MyFileWidget(QWidget *parent) :
     //m_manager = Common::getInstance()->getNetworkAccessManager();
     m_uploadTask = UploadTask::getInstance();
     checkTaskList();
+    m_downloadTask = DownloadTask::getInstance();
 
 }
 
@@ -113,6 +114,8 @@ void MyFileWidget::menuActions()
     //点击item显示的菜单
     connect(m_actionDownload,&QAction::triggered,this,[=](){
         qDebug()<<"下载";
+        addDownloadFiles();
+
     });
     connect(m_actionShare,&QAction::triggered,this,[=](){
         qDebug()<<"分享";
@@ -635,6 +638,13 @@ void MyFileWidget::checkTaskList()
         uploadFilesAction();
     });
     m_uploadFileTimer.start(1000);
+
+    connect(&m_downloadFileTimer,&QTimer::timeout,this,[=](){
+        //定时执行
+        //下载文件
+        downloadFilesAction();
+    });
+    m_downloadFileTimer.start(1000);
 }
 
 void MyFileWidget::uploadFilesAction()
@@ -799,3 +809,84 @@ void MyFileWidget::uploadFile(UploadFileInfo *uploadFileInfo)
 
 
 }
+
+void MyFileWidget::addDownloadFiles()
+{
+    qDebug() << "addDownloadFiles()";
+    emit gotoTransform(TransformStatus::Download);
+    //当前选中的item
+    QListWidgetItem* item = ui->listWidget->currentItem();
+    if(item == NULL){
+        qDebug() << "item == NULL";
+        return;
+    }
+    FileInfo *fileInfo = NULL;
+    int size = m_fileList.size();
+    for(int i = 0;i<size;i++){
+        fileInfo = m_fileList.at(i);
+        if(fileInfo != NULL){
+            if(fileInfo->fileName == item->text()){
+                //找到FileInfo对象了
+                //打开保存文件的对话框
+                QString filePath = QFileDialog::getSaveFileName(this,"请选择保存文件路径",item->text());
+                qDebug()<<"filePath:"<<filePath;
+                if(filePath.isEmpty()){
+                    qDebug() << "filePathName.isEmpty()";
+                    return;
+                }
+                //将需要下载的文件添加到下载任务列表
+                int res = m_downloadTask->appendDownloadTask(fileInfo, filePath);
+                if (res == -2) {
+                     qDebug() << "下载失败";
+                }
+                 qDebug() << "将需要下载的文件添加到下载任务列表";
+            }
+        }
+    }
+
+}
+
+void MyFileWidget::downloadFilesAction()
+{
+    //取出任务列表的首任务
+    if(m_downloadTask->isEmpty()){
+        qDebug() << "下载任务列表为空";
+        return ;
+    }
+    DownloadFileInfo* downloadFileInfo = m_downloadTask->takeTask();
+    if(downloadFileInfo == NULL){
+        qDebug()<<"任务列表为空";
+        return;
+    }
+    QFile *file = downloadFileInfo->file;
+    //http://192.168.139.131:80/group1/M00/00/00/wKiLg1-X3T-Aa-ODAAABasdNeVk96.json
+    QUrl url = QUrl(downloadFileInfo->url);
+    QNetworkRequest request;
+    request.setUrl(url);
+    //去下载文件了
+    QNetworkReply *reply = m_manager->get(request); //请求方法
+    if (reply == NULL) {
+        //删除任务
+        m_downloadTask->delDownloadTask();
+        qDebug() << "下载文件失败";
+        return;
+    }
+     connect(reply, &QNetworkReply::readyRead, [=]() {
+         if(file != NULL){
+             file->write(reply->readAll());
+         }
+
+     });
+    connect(reply, &QNetworkReply::finished, [=]() {
+        reply->deleteLater();
+        //删除下载任务
+        m_downloadTask->delDownloadTask();
+    });
+    //显示文件下载进度
+    connect(reply, &QNetworkReply::downloadProgress, this, [=](qint64 bytesSent, qint64 bytesTotal){
+
+        downloadFileInfo->fdp->setProgress(bytesSent/1024, bytesTotal/1024);
+    });
+
+}
+

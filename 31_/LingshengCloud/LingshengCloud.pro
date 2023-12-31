@@ -19,6 +19,8 @@ SOURCES += \
     buttongroup.cpp \
     common.cpp \
     des.c \
+    downloadlayout.cpp \
+    downloadtask.cpp \
     filedataprogress.cpp \
     filepropertyinfodialog.cpp \
     logindialog.cpp \
@@ -37,7 +39,10 @@ HEADERS += \
     buttongroup.h \
     common.h \
     des.h \
+    downloadlayout.h \
+    downloadtask.h \
     filedataprogress.h \
+    fileinfo.h \
     filepropertyinfodialog.h \
     logindialog.h \
     logininfoinstance.h \
