@@ -59,6 +59,7 @@ int DownloadTask::appendDownloadTask(FileInfo *fileInfo, QString filePath, bool 
         downloadFile->md5 = fileInfo->md5;
         downloadFile->url = fileInfo->url;
         downloadFile->file = file;
+        downloadFile->fileName = fileInfo->fileName;
 
         //m_fileList保存上传文件的列表
         //上传进度条（显示）, 将进度条UI显示在vLayout上

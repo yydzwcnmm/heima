@@ -331,3 +331,96 @@ QString Common::getBoundary()
     return boundary;
 
 }
+
+void Common::writeRecord(QString user, QString fileName, QString code,QString path /*="conf/record"*/)
+{
+    // conf/record/milo.txt
+    QString  userFilePath = QString("%1/%2.txt").arg(path).arg(user);
+    qDebug() << "userFilePath:" << userFilePath;
+    qDebug() << "Path:" << path;
+    QDir dir(path);
+    if(!dir.exists()){
+       //目录不存在,创建目录
+       if(dir.mkpath(path)){
+          qDebug() << "目录创建成功";
+       }else {
+          qDebug()<<"目录创建失败";
+       }
+    }
+    QByteArray array;
+    QFile file(userFilePath);
+    if(file.exists()){
+        //如果存在, 先读取文件原来的内容
+        if(!file.open(QIODevice::ReadOnly)){
+            //如果打开失败
+            qDebug()<<"file.open(QIODevice::ReadOnly) err";
+            if(file.isOpen()){
+                file.close();
+            }
+            return;
+        }
+        array = file.readAll();
+        if(file.isOpen()){
+            file.close();
+        }
+    }
+    if(!file.open(QIODevice::WriteOnly)){
+        //如果打开失败
+        qDebug()<<"file.open(QIODevice::WriteOnly) err";
+        if (file.isOpen()) {
+            file.close();
+        }
+        return;
+    }
+
+    //记录写入文件
+    //xxx.jpg   2020/11/20 16:02:01 上传成功
+    QDateTime time = QDateTime::currentDateTime(); //获取系统当前时间
+    QString timeStr = time.toString("yyyy/MM/dd hh:mm:ss");//时间格式化
+    QString actionString = getActionStrring(code);
+    //记录到文件的内容
+    QString str = QString("%1\t%2\t%3\r\n").arg(fileName).arg(timeStr).arg(actionString);
+    qDebug() << "str:" << str;
+    file.write(str.toLocal8Bit());
+    if (!array.isEmpty()) {
+        //读取到文件内容不为空的时候
+        file.write(array);
+    }
+
+    if (file.isOpen()) {
+        file.close();
+    }
+
+}
+
+QString Common::getActionStrring(QString code)
+{
+    /*
+    005：上传的文件已存在
+    006: 秒传成功
+    007: 秒传失败
+    008: 上传成功
+    009: 上传失败
+    090: 下载成功
+    091: 下载失败
+    */
+    QString str;
+    if (code == "005") {
+        str = "上传的文件已存在";
+    } else if (code == "006") {
+        str = "秒传成功";
+    } else if (code == "007") {
+        str = "秒传失败";
+    } else if (code == "008") {
+        str = "上传成功";
+    } else if (code == "009") {
+        str = "上传失败";
+    } else if (code == "090") {
+        str = "下载成功";
+    } else if (code == "091") {
+        str = "下载失败";
+    }
+
+    return str;
+
+}

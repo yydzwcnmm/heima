@@ -20,6 +20,7 @@
 #define CONF_REMEBER_NO  "no"
 //配置文件路径
 #define FILE_TYPE_DIR   ":conf/fileType"
+#define RECORD_DIR       "conf/record"
 
 enum TransformStatus {
     Upload,
@@ -60,6 +61,10 @@ public:
     QString getFileMd5(QString filePath);
     //获取分隔符
     QString getBoundary();
+
+    void writeRecord(QString user, QString fileName, QString code, QString path = RECORD_DIR);
+
+    QString getActionStrring(QString code);
 
 };
 

@@ -697,12 +697,16 @@ void MyFileWidget::uploadFilesAction()
           //删除已经完成的上传任务
             uploadFileInfo->uploadStatus = UPLOAF_FILE_EXISTE;
             m_uploadTask->delUploadTask();
+            m_common->writeRecord(m_loginInfo->user(),uploadFileInfo->fileName,code);
+
 
         }else if("006" == code){//秒传成功
             m_uploadTask->delUploadTask();
+            m_common->writeRecord(m_loginInfo->user(),uploadFileInfo->fileName,code);
         }else if("007" ==code){//秒传失败
             //服务器并没有此文件，需要真正上传文件
             uploadFile(uploadFileInfo);
+            m_common->writeRecord(m_loginInfo->user(),uploadFileInfo->fileName,code);
         }else if("111" ==code) { //token验证失败
             QMessageBox::critical(this, "账号异常", "请重新登录");
             emit sigLoginAgain();
@@ -792,11 +796,12 @@ void MyFileWidget::uploadFile(UploadFileInfo *uploadFileInfo)
                 getMyFileCount();
 
                 qDebug() << "刷新成功";
+                m_common->writeRecord(m_loginInfo->user(),uploadFileInfo->fileName,code);
             }
             if("009"== code){
                 qDebug() << "上传失败";
                 uploadFileInfo->uploadStatus = UPLOAD_FAILD;
-
+                m_common->writeRecord(m_loginInfo->user(),uploadFileInfo->fileName,code);
             }
             //获取到上传任务列表
             UploadTask *uploadTask = UploadTask::getInstance();
@@ -836,8 +841,12 @@ void MyFileWidget::addDownloadFiles()
                 }
                 //将需要下载的文件添加到下载任务列表
                 int res = m_downloadTask->appendDownloadTask(fileInfo, filePath);
+                qDebug() <<"fileInfo->fileName"<<fileInfo->fileName;
                 if (res == -2) {
                      qDebug() << "下载失败";
+                     m_common->writeRecord(LoginInfoInstance::getInstance()->user(),
+                                           fileInfo->fileName,
+                                           "091"); //091 下载失败
                 }
                  qDebug() << "将需要下载的文件添加到下载任务列表";
             }
@@ -854,6 +863,7 @@ void MyFileWidget::downloadFilesAction()
         return ;
     }
     DownloadFileInfo* downloadFileInfo = m_downloadTask->takeTask();
+    qDebug()<<"downloadFileInfo->fileName"<<downloadFileInfo->fileName;
     if(downloadFileInfo == NULL){
         qDebug()<<"任务列表为空";
         return;
@@ -879,8 +889,14 @@ void MyFileWidget::downloadFilesAction()
      });
     connect(reply, &QNetworkReply::finished, [=]() {
         reply->deleteLater();
+        m_common->writeRecord(LoginInfoInstance::getInstance()->user(),
+                              downloadFileInfo->fileName,
+                              "090");
+        qDebug()<<"downloadFileInfo->fileName"<<downloadFileInfo->fileName;
+        //090下载成功
         //删除下载任务
         m_downloadTask->delDownloadTask();
+
     });
     //显示文件下载进度
     connect(reply, &QNetworkReply::downloadProgress, this, [=](qint64 bytesSent, qint64 bytesTotal){

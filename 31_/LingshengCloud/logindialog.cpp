@@ -96,18 +96,24 @@ void LoginDialog::on_login_clicked()
     QMessageBox::information(this, "提示", "用户名和密码格式正确");
 
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+
     QNetworkRequest request; //栈
     QString ip = m_common->getConfValue("web_server","ip");
+    qDebug() << "ip"<<ip;
     QString port = m_common->getConfValue("web_server","port");
+    qDebug() << "port"<<port;
     QString url = QString("http://%1:%2/login").arg(ip).arg(port);
     request.setUrl(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
     QJsonObject paramsObj;
     paramsObj.insert("user", username);
     paramsObj.insert("pwd", m_common->getStrMd5(password));
+    qDebug() << "username)"<<username;
+    qDebug() << "password"<<password;
     QJsonDocument doc(paramsObj);
     QByteArray data = doc.toJson();
     QNetworkReply *reply = manager->post(request,data);
+    qDebug() << "QNetworkReply *reply = manager->post(request,data)";
 
     //读取服务器返回的数据
     connect(reply,&QNetworkReply::readyRead,this,[=]{
