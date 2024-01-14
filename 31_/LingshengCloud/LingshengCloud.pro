@@ -30,6 +30,7 @@ SOURCES += \
     myfilewidget.cpp \
     mymenu.cpp \
     networkdata.cpp \
+    sharewidget.cpp \
     titlewidget.cpp \
     transformwidget.cpp \
     uploadlayout.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     myfilewidget.h \
     mymenu.h \
     networkdata.h \
+    sharewidget.h \
     titlewidget.h \
     transformwidget.h \
     uploadlayout.h \
@@ -62,6 +64,7 @@ FORMS += \
     logindialog.ui \
     mainwindow.ui \
     myfilewidget.ui \
+    sharewidget.ui \
     titlewidget.ui \
     transformwidget.ui
 

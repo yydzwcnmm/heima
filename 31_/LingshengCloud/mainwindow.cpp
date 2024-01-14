@@ -13,7 +13,10 @@ MainWindow::MainWindow(QWidget *parent)
     buttonsSignals();
     //处理窗口信号
     windowSignals();
+    // 信号传递
+    //connect(ui->share_page, &ShareWidget::gotoTransform, ui->myFile_page, &MyFileWidget::gotoTransform);
     connect(ui->myFile_page, &MyFileWidget::gotoTransform, this, &MainWindow::onGotoTransform);
+    connect(ui->share_page, &ShareWidget::gotoTransform, this, &MainWindow::onGotoTransform);
 
 }
 
@@ -35,10 +38,15 @@ void MainWindow::buttonsSignals()
 
     connect(ui->button_group,&ButtonGroup::sigMyFile,this,[=](){
             ui->stackedWidget->setCurrentWidget(ui->myFile_page);
+
+
     });
 
     connect(ui->button_group,&ButtonGroup::sigShare,this,[=](){
             ui->stackedWidget->setCurrentWidget(ui->share_page);
+            //刷新共享文件列表
+            ui->share_page->refreshFiles();
+
     });
 
     connect(ui->button_group,&ButtonGroup::sigDownload,this,[=](){

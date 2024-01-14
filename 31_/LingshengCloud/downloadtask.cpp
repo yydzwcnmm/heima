@@ -50,26 +50,38 @@ int DownloadTask::appendDownloadTask(FileInfo *fileInfo, QString filePath, bool 
         //只写的方式打开文件
         //添加到下载任务列表
         //对象有哪些属性
+        qDebug()<<"DownloadFileInfo* downloadFile = new DownloadFileInfo;";
         DownloadFileInfo* downloadFile = new DownloadFileInfo;
-
         downloadFile->filePath = filePath;
         downloadFile->user = fileInfo->user;
-        downloadFile->md5 = Common::getInstance()->getFileMd5(filePath);
-        downloadFile->isShareTask = isShareTask;
         downloadFile->md5 = fileInfo->md5;
+        downloadFile->isShareTask = isShareTask;
         downloadFile->url = fileInfo->url;
         downloadFile->file = file;
         downloadFile->fileName = fileInfo->fileName;
 
+        qDebug()<<"downloadFile->filePath :"<<downloadFile->filePath;
+        qDebug()<<"downloadFile->user :"<<downloadFile->user;
+        qDebug()<<"downloadFile->md5r :"<<downloadFile->md5;
+        qDebug()<<"downloadFile->isShareTask :"<<downloadFile->isShareTask;
+        qDebug()<<"downloadFile->url :"<<downloadFile->url;
+        qDebug()<<"downloadFile->file:"<<downloadFile->file;
+        qDebug()<<"downloadFile->fileName :"<<downloadFile->fileName ;
+
+
+
         //m_fileList保存上传文件的列表
         //上传进度条（显示）, 将进度条UI显示在vLayout上
-        FileDataProgress *fdp = new FileDataProgress();
-        fdp->setFileName(downloadFile->fileName);
+        FileDataProgress *fdp = new FileDataProgress();       
+        fdp->setFileName(downloadFile->fileName);        
         downloadFile->fdp = fdp;
-        QVBoxLayout *vLayout = DownloadLayout::getInstance()->getDownloadLayout();
+        QVBoxLayout *vLayout = DownloadLayout::getInstance()->getDownloadLayout();        
         vLayout->addWidget(fdp);
-        m_fileList.append(downloadFile);
+        qDebug()<<"vLayout->addWidget(fdp);";
+        m_fileList.append(downloadFile);        
+        qDebug()<<"m_fileList.append(downloadFile);";
         return 0;
+
     }
 }
 

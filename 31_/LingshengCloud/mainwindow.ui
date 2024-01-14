@@ -30,14 +30,14 @@
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="MyFileWidget" name="myFile_page">
      <property name="styleSheet">
       <string notr="true"/>
      </property>
     </widget>
-    <widget class="QWidget" name="share_page"/>
+    <widget class="ShareWidget" name="share_page"/>
     <widget class="QWidget" name="download_page"/>
     <widget class="TransformWidget" name="transform_page"/>
    </widget>
@@ -73,6 +73,12 @@
    <class>TransformWidget</class>
    <extends>QWidget</extends>
    <header>transformwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ShareWidget</class>
+   <extends>QWidget</extends>
+   <header>sharewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

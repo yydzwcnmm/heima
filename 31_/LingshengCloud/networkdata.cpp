@@ -112,3 +112,21 @@ NetworkData::NetworkData(QObject *parent) : QObject(parent)
      }
      return code;
  }
+
+ int NetworkData::getCount(QByteArray json)
+ {
+    int count;
+    QJsonParseError err;
+    //解析返回数据
+    QJsonDocument rootDoc = QJsonDocument::fromJson(json,&err);
+    if(err.error != QJsonParseError::NoError) {
+        qDebug() << "Json格式错误";
+    }else{
+        //解析json
+        QJsonObject rootObj = rootDoc.object();
+        QJsonValue codeValue = rootObj.value("count");
+        count = codeValue.toInt();
+        }
+    return count;
+
+}

@@ -4,6 +4,7 @@
 #include <QString>
 #include "des.h"
 #include <QNetworkAccessManager>
+#include <QCoreApplication>
 
 // 正则表达式
 #define USER_REG        "^[a-zA-Z\\d_@#-\*]\{3,16\}$"
@@ -65,7 +66,9 @@ public:
     void writeRecord(QString user, QString fileName, QString code, QString path = RECORD_DIR);
 
     QString getActionStrring(QString code);
-
+    //
+    //等待
+    void sleep(unsigned int msec);
 };
 
 #endif // COMMON_H
