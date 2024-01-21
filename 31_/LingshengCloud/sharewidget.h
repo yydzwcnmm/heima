@@ -51,7 +51,7 @@ signals:
 
 private:
 
-
+    bool m_downloadTaskisEmpty = false;
     Common *m_common;
     LoginInfoInstance *m_loginInfo;
     DownloadTask *m_downloadTask;

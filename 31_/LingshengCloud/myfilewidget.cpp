@@ -18,7 +18,7 @@ MyFileWidget::MyFileWidget(QWidget *parent) :
 
 MyFileWidget::~MyFileWidget()
 {
-    delete ui;
+     ui;
 }
 
 
@@ -344,6 +344,7 @@ void MyFileWidget::clearFileList()
         FileInfo *temp = m_fileList.takeFirst();
         if(temp != nullptr){
             delete temp;
+            temp = NULL;
         }
     }
 }
@@ -355,6 +356,7 @@ void MyFileWidget::clearItems()
         QListWidgetItem *item = ui->listWidget->takeItem(0);
         if(item!=nullptr){
             delete item;
+            item = NULL;
         }
     }
 }
@@ -440,6 +442,7 @@ void MyFileWidget::shareFile(FileInfo *fileInfo)
             return;
         }
          delete reply;
+
     });
 }
 
@@ -494,6 +497,7 @@ void MyFileWidget::deleteFile(FileInfo *fileInfo)
                                //删除listWidget上的图标
                                ui->listWidget->removeItemWidget(item);
                                delete item;
+                               item = NULL;
 
                                getMyFileCount(Normal);
                                break;
@@ -506,9 +510,9 @@ void MyFileWidget::deleteFile(FileInfo *fileInfo)
                    }
                }
         }
-         delete reply;
+          reply;
     });
-    //delete reply;
+    // reply;
 }
 
 void MyFileWidget::showFileProperty(FileInfo *fileInfo)
@@ -604,7 +608,7 @@ Content-Type: image/png\r\n
             }
 
         }
-        reply->deleteLater();
+        reply->Later();
     });
 }
 #endif
@@ -863,7 +867,7 @@ void MyFileWidget::downloadFilesAction()
         return ;
     }
     DownloadFileInfo* downloadFileInfo = m_downloadTask->takeTask();
-    qDebug()<<"downloadFileInfo->fileName"<<downloadFileInfo->fileName;
+    qDebug()<<" 用户下载任务列表m_downloadTask->takeTask(); downloadFileInfo->fileName"<<downloadFileInfo->fileName;
     if(downloadFileInfo == NULL){
         qDebug()<<"任务列表为空";
         return;
@@ -892,7 +896,12 @@ void MyFileWidget::downloadFilesAction()
         m_common->writeRecord(LoginInfoInstance::getInstance()->user(),
                               downloadFileInfo->fileName,
                               "090");
-        qDebug()<<"downloadFileInfo->fileName"<<downloadFileInfo->fileName;
+        qDebug()<<"用户下载 finished downloadFileInfo->fileName"<<downloadFileInfo->fileName;
+
+        //等待
+        m_common->sleep(300);
+
+
         //090下载成功
         //删除下载任务
         m_downloadTask->delDownloadTask();

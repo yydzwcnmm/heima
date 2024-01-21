@@ -38,19 +38,16 @@ NetworkData::NetworkData(QObject *parent) : QObject(parent)
 
      return list;
  }
+
  QList<FileInfo*> NetworkData::getFileInfo(QByteArray json)
  {
-     qDebug() << "11111111111:";
-     FileInfo* fileInfo = new FileInfo;
      QList<FileInfo*> list;
      QJsonParseError err;
      //解析返回数据
      QJsonDocument rootDoc = QJsonDocument::fromJson(json, &err);
      if (err.error != QJsonParseError::NoError) {
-         qDebug() << "Json格式错误 NetworkData::getFileInfo(QByteArray json)";
-     }else {
-         //解析json
-
+         qDebug() << "Json格式错误";
+     } else {
          //解析json
          QJsonObject rootObj = rootDoc.object();
          QJsonValue filesValue = rootObj.value("files");
@@ -84,18 +81,15 @@ NetworkData::NetworkData(QObject *parent) : QObject(parent)
                      fileInfo->type = typeValue.toString();
 
                      list.append(fileInfo);
-                }
+                 }
              }
          }
-
      }
 
-     //fileInfo->deleteLater();
-     free(fileInfo);
-     fileInfo=nullptr;
-     qDebug() << "11111111111:";
      return list;
  }
+
+
  QString NetworkData::getCode(QByteArray json)
  {
      QString code;
@@ -113,20 +107,21 @@ NetworkData::NetworkData(QObject *parent) : QObject(parent)
      return code;
  }
 
+
  int NetworkData::getCount(QByteArray json)
  {
-    int count;
-    QJsonParseError err;
-    //解析返回数据
-    QJsonDocument rootDoc = QJsonDocument::fromJson(json,&err);
-    if(err.error != QJsonParseError::NoError) {
-        qDebug() << "Json格式错误";
-    }else{
-        //解析json
-        QJsonObject rootObj = rootDoc.object();
-        QJsonValue codeValue = rootObj.value("count");
-        count = codeValue.toInt();
-        }
-    return count;
+     int count;
+     QJsonParseError err;
+     //解析返回数据
+     QJsonDocument rootDoc = QJsonDocument::fromJson(json, &err);
+     if (err.error != QJsonParseError::NoError) {
+         qDebug() << "Json格式错误";
+     } else {
+         //解析json
+         QJsonObject rootObj = rootDoc.object();
+         QJsonValue codeValue = rootObj.value("count");
+         count = codeValue.toInt();
+     }
 
-}
+     return count;
+ }

@@ -5,7 +5,9 @@ DownloadTask* DownloadTask::m_instance= new DownloadTask;
 
 DownloadTask::DownloadTask()
 {
-
+     m_fileList = QList<DownloadFileInfo*>();
+     qDebug() << "DownloadTask::DownloadTask() " ;
+     qDebug() << "m_fileList size before append: " << m_fileList.size();
 }
 
 DownloadTask::~DownloadTask()
@@ -36,7 +38,7 @@ DownloadFileInfo* DownloadTask::takeTask()
     return temp;
 }
 
-#if 1
+#if 0
 //添加文件到上传任务列表中
 int DownloadTask::appendDownloadTask(FileInfo *fileInfo, QString filePath, bool isShareTask)
 {
@@ -76,16 +78,84 @@ int DownloadTask::appendDownloadTask(FileInfo *fileInfo, QString filePath, bool 
         fdp->setFileName(downloadFile->fileName);        
         downloadFile->fdp = fdp;
         QVBoxLayout *vLayout = DownloadLayout::getInstance()->getDownloadLayout();        
-        vLayout->addWidget(fdp);
+        vLayout->insertWidget(0, fdp);
         qDebug()<<"vLayout->addWidget(fdp);";
+
+
         m_fileList.append(downloadFile);        
         qDebug()<<"m_fileList.append(downloadFile);";
+
         return 0;
 
     }
 }
 
 #endif
+
+int DownloadTask::appendDownloadTask(FileInfo *fileInfo, QString filePath, bool isShareTask)
+{
+    qDebug() << "Entering appendDownloadTask";
+    qDebug() << "Before accessing m_fileList. m_fileList size: " << m_fileList.size();
+    QFile *file = new QFile(filePath);
+    if (!file->open(QIODevice::WriteOnly)) {
+        qDebug() << "get err";
+
+        delete file;
+        file = NULL;
+        return -2;
+    } else {
+        //只写的方式打开文件
+
+        //添加到下载任务列表
+        //对象有哪些属性
+
+        DownloadFileInfo *downloadFile = new DownloadFileInfo;
+        downloadFile->user = fileInfo->user;
+        downloadFile->fileName = fileInfo->fileName;
+        downloadFile->filePath = filePath;
+        downloadFile->md5 = fileInfo->md5;
+        downloadFile->url = fileInfo->url;
+        downloadFile->file = file;
+        downloadFile->isShareTask = isShareTask;
+
+        qDebug()<<"downloadFile->filePath :"<<downloadFile->filePath;
+        qDebug()<<"downloadFile->user :"<<downloadFile->user;
+        qDebug()<<"downloadFile->md5r :"<<downloadFile->md5;
+        qDebug()<<"downloadFile->isShareTask :"<<downloadFile->isShareTask;
+        qDebug()<<"downloadFile->url :"<<downloadFile->url;
+        qDebug()<<"downloadFile->file:"<<downloadFile->file;
+        qDebug()<<"downloadFile->fileName :"<<downloadFile->fileName ;
+
+        qDebug() << "m_fileList size before append: " << m_fileList.size();
+        //下载进度条（显示）, 将进度条UI显示在vLayout上
+        FileDataProgress *fdp = new FileDataProgress();
+        fdp->setFileName(downloadFile->fileName);
+        downloadFile->fdp = fdp;
+
+        QVBoxLayout *vLayout = DownloadLayout::getInstance()->getDownloadLayout();
+        //每一个都添加最上面
+        vLayout->insertWidget(0, fdp);
+        qDebug()<<"vLayout->addWidget(fdp);";
+
+        if (downloadFile != nullptr) {
+            qDebug() << "Before accessing m_fileList. downloadFile->filePath: " << downloadFile->filePath;
+            // ... 其他代码
+        } else {
+            qDebug() << "downloadFile is null!";
+        }
+
+        //m_fileList保存下载文件的列表
+        m_fileList.append(downloadFile);
+
+        qDebug()<<"m_fileList.append(downloadFile);";
+
+
+        return 0;
+
+    }
+
+}
+
 
 //删除任务
 void DownloadTask::delDownloadTask()
@@ -108,13 +178,16 @@ void DownloadTask::delDownloadTask()
 
                 //第二步
                 delete downloadFileInfo->fdp;
+                downloadFileInfo->fdp = NULL;
                 QFile *file = downloadFileInfo->file;
                 if (file->isOpen()) {
                     file->close();
                 }
                 delete file;
+                file = NULL;
                 //第三步
                 delete downloadFileInfo;
+                downloadFileInfo = NULL;
 
             }
         //}

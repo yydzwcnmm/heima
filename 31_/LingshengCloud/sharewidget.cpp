@@ -8,6 +8,12 @@ ShareWidget::ShareWidget(QWidget *parent) :
     ui->setupUi(this);
     initListWidget();
     addMenu();
+
+    m_downloadTask = DownloadTask::getInstance();
+
+    checkTaskList();
+
+    qDebug() << "ShareWidget::ShareWidget(QWidget *parent) :";
 }
 
 ShareWidget::~ShareWidget()
@@ -179,7 +185,7 @@ void ShareWidget::cancelShareFile(FileInfo *fileInfo)
     connect(reply, &QNetworkReply::readyRead, this, [=](){
         //读数据
         QByteArray data = reply->readAll();
-        qDebug() << "服务器返回数据:" << QString(data);
+        qDebug() << "1服务器返回数据:" << QString(data);
 
         QString code = NetworkData::getCode(data);
         if(code == "018"){
@@ -200,10 +206,10 @@ void ShareWidget::cancelShareFile(FileInfo *fileInfo)
                         //删除图标
                         ui->listWidget->removeItemWidget(item);
                         delete item;
-                        item = nullptr;
+                        item = NULL;
                         //删除内容
                         m_fileList.removeAt(i);
-                        delete fileInfo;
+
                     }
                         break;
                 }
@@ -232,7 +238,8 @@ void ShareWidget::getShareFilesCount()
     QNetworkRequest request; //栈
     QString ip = m_common->getConfValue("web_server", "ip");
     QString port = m_common->getConfValue("web_server", "port");
-
+    qDebug() << "QString ip =" << ip;
+     qDebug() << "QString  port =" <<  port;
     //http://192.168.52.139/sharefiles?cmd=count
     QString url = QString("http://%1:%2/sharefiles?cmd=count").arg(ip).arg(port);
     request.setUrl(url);
@@ -244,8 +251,11 @@ void ShareWidget::getShareFilesCount()
     connect(reply, &QNetworkReply::readyRead, this, [=](){
         //读数据
         QByteArray data = reply->readAll();
-        qDebug() << "服务器返回数据:" << QString(data);
-        m_shareFilesCount = NetworkData::getCount(data);
+        qDebug() << "2服务器返回数据:" << QString(data);
+        //m_shareFilesCount = NetworkData::getCount(data);
+        QString Count = QString(data);
+        m_shareFilesCount = Count.toInt();
+
         if(m_shareFilesCount>0){
             //请求用户文件信息
             getShareFilesList();
@@ -283,19 +293,26 @@ void ShareWidget::getShareFilesList()
 
     QByteArray data = doc.toJson();
     QNetworkReply *reply = m_manager->post(request, data);
+
+
     //读取服务器返回的数据
     connect(reply, &QNetworkReply::readyRead, this, [=](){
         //读数据
         QByteArray data = reply->readAll();
         qDebug() << "服务器返回数据:" << QString(data);
+
         //清空m_fileList
         clearFileList();
+
         m_fileList = NetworkData::getFileInfo(data);
         qDebug() << "m_fileList size()" << m_fileList.size();
+
         //立即销毁
         reply->deleteLater();
+
         //清空ui->listWidget中items
         clearItems();
+
         //在ui->listWidget显示图标
         showFileItems();
 
@@ -312,7 +329,7 @@ void ShareWidget::clearFileList()
         FileInfo *temp = m_fileList.takeFirst();
         if (temp != nullptr) {
             delete temp;
-            temp = nullptr;
+            temp = NULL;
         }
     }
 }
@@ -324,7 +341,7 @@ void ShareWidget::clearItems()
     for (int i=0;i<count;i++) {
         QListWidgetItem *item = ui->listWidget->takeItem(0);  //注意i=0,而不是i=1
         delete item;
-        item = nullptr;
+        item = NULL;
     }
 }
 
@@ -375,8 +392,9 @@ void ShareWidget::addDownloadFiles()
                 }
 
 
-                //将需要下载的文件添加到下载任务列表
+
                 int res = m_downloadTask->appendDownloadTask(fileInfo, filePath, true);
+                qDebug () << " int res = m_downloadTask->appendDownloadTask(fileInfo, filePath, true);";
                 if (res == -2) {
                     //下载失败 091
                     m_common->writeRecord(m_loginInfo->user(),
@@ -405,12 +423,16 @@ void ShareWidget::checkTaskList()
 void ShareWidget::downloadFilesAction()
 {
     //取出上传任务列表的首任务
+    qDebug() << "分享下载任务列表";
     if (m_downloadTask->isEmpty()) {
-        //qDebug() << "任务列表为空";
+        qDebug() << "分享下载任务列表为空";
+        qDebug() << "m_downloadTaskisEmpty = true;";
+         m_downloadTaskisEmpty = true;
         return;
     }
 
     DownloadFileInfo *downloadFileInfo =  m_downloadTask->takeTask();
+    qDebug() << "DownloadFileInfo *downloadFileInfo =  m_downloadTask->takeTask();";
     if (downloadFileInfo == NULL) {
         qDebug() << "任务列表为空";
         return;
@@ -429,9 +451,10 @@ void ShareWidget::downloadFilesAction()
 
     //去下载文件了
     QNetworkReply *reply = m_manager->get(request); //请求方法
-    if (reply == NULL) {
+    if (reply == NULL&&(m_downloadTaskisEmpty==false)) {
         //删除任务
         m_downloadTask->delDownloadTask();
+        qDebug() << "m_downloadTask->delDownloadTask();";
 
         qDebug() << "下载文件失败";
         return;
@@ -447,16 +470,14 @@ void ShareWidget::downloadFilesAction()
     connect(reply, &QNetworkReply::finished, [=]() {
         reply->deleteLater();
 
-        m_common->writeRecord(m_loginInfo->user(),
-                              downloadFileInfo->fileName,
-                              "090");
+        m_common->writeRecord(m_loginInfo->user(),downloadFileInfo->fileName,"090");
         qDebug() << "等待日志信息写入日志文件中";
         //等待日志信息写入日志文件中
-        m_common->sleep(3000);
-
+        m_common->sleep(300);
+        qDebug() << "苏醒";
         //删除下载任务
         m_downloadTask->delDownloadTask();
-
+        qDebug() << "删除下载任务成功";
         //调用共享文件下载标志处理接口
         //dealFilePv(downloadFileInfo->md5, downloadFileInfo->fileName);
     });

@@ -47,7 +47,7 @@ private:
     //静态数据成员，类中声明，类外必须定义
     static DownloadTask* m_instance;
 
-public:
+private:
     QList<DownloadFileInfo*> m_fileList; //下载的文件
 
 

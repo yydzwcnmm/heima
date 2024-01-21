@@ -113,6 +113,7 @@ void Common::writeLoginInfo(QString user, QString pwd, bool isRemeber, QString p
         return;
     }
 
+
     //密码
     unsigned char encPwd[1024] = {0};
     int encPwdLen;
@@ -390,7 +391,7 @@ void Common::writeRecord(QString user, QString fileName, QString code,QString pa
     if (file.isOpen()) {
         file.close();
     }
-
+    qDebug() << "写入日志";
 }
 
 QString Common::getActionStrring(QString code)
