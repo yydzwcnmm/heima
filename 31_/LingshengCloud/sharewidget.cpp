@@ -479,11 +479,72 @@ void ShareWidget::downloadFilesAction()
         m_downloadTask->delDownloadTask();
         qDebug() << "删除下载任务成功";
         //调用共享文件下载标志处理接口
-        //dealFilePv(downloadFileInfo->md5, downloadFileInfo->fileName);
+        dealFilePv(downloadFileInfo->md5, downloadFileInfo->fileName);
     });
 
     //显示文件下载进度
     connect(reply, &QNetworkReply::downloadProgress, this, [=](qint64 bytesSent, qint64 bytesTotal){
         downloadFileInfo->fdp->setProgress(bytesSent/1024, bytesTotal/1024);
     });
+}
+
+void ShareWidget::dealFilePv(QString md5, QString fileName)
+{
+    QNetworkRequest request; //栈
+    QString ip = m_common->getConfValue("web_server", "ip");
+    QString port = m_common->getConfValue("web_server", "port");
+
+    //http://192.168.52.139/dealsharefile?cmd=pv
+    QString url = QString("http://%1:%2/dealsharefile?cmd=pv").arg(ip).arg(port);
+    request.setUrl(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
+
+/*
+{
+    "filename": "ui_buttongroup.h",
+    "md5": "a89390d867d5da18c8b1a95908d7c653",
+    "user": "milo"
+}
+*/
+    QJsonObject paramsObj;
+    paramsObj.insert("user", LoginInfoInstance::getInstance()->user());
+    paramsObj.insert("filename", fileName);
+    paramsObj.insert("md5", md5);
+    QJsonDocument doc(paramsObj);
+
+    QByteArray data = doc.toJson();
+    QNetworkReply *reply = m_manager->post(request, data);
+
+
+    //读取服务器返回的数据
+    connect(reply, &QNetworkReply::readyRead, this, [=](){
+        //读数据
+        QByteArray data = reply->readAll();
+        qDebug() << "服务器返回数据:" << QString(data);
+
+        QString code = NetworkData::getCode(data);
+        if (code == "017") {
+            //成功
+            qDebug() <<"PV处理成功";
+
+            //需要去改m_fileList中对应的文件pv值
+            for (int i=0;i<m_fileList.size();++i) {
+                FileInfo *info = m_fileList.at(i);
+                if (info->md5 == md5 && info->fileName == fileName) {
+                    int pv = info->pv;
+                    info->pv = pv + 1;
+                    break;
+                }
+            }
+
+        } else {
+            //失败
+            qDebug() <<"PV处理失败";
+        }
+
+        //立即销毁
+        reply->deleteLater();
+
+    });
+
 }
