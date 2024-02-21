@@ -35,6 +35,7 @@ public:
     UploadFileInfo* takeTask();
     bool isEmpty();
     void delUploadTask();
+    void clearList();
 
 private:
     UploadTask();

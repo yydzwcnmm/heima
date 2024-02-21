@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     //connect(ui->share_page, &ShareWidget::gotoTransform, ui->myFile_page, &MyFileWidget::gotoTransform);
     connect(ui->myFile_page, &MyFileWidget::gotoTransform, this, &MainWindow::onGotoTransform);
     connect(ui->share_page, &ShareWidget::gotoTransform, this, &MainWindow::onGotoTransform);
-
+    connect(ui->share_page,&ShareWidget::saveFile,this,&MainWindow::init);
 }
 
 MainWindow::~MainWindow()
@@ -63,6 +63,7 @@ void MainWindow::buttonsSignals()
     });
     connect(ui->myFile_page,&MyFileWidget::sigLoginAgain,this,[=](){
             emit sigLoginAgain();
+            ui->myFile_page->changeUser();
     });
 
 }
@@ -96,8 +97,13 @@ void MainWindow::windowSignals()
 void MainWindow::init()
 {
     //初始化用户数据
-    //ui->myFile_page->getMyFileCount();
-    ui->myFile_page->getMyFileList();
+    //刷新用户文件列表
+    ui->myFile_page->getMyFileCount();
+    //ui->myFile_page->getMyFileList();
+    //刷新用户文件列表
+    //ui->myFile_page->refreshFiles();
+    //默认设置myFile_page
+    ui->stackedWidget->setCurrentWidget(ui->myFile_page);
 
 }
 

@@ -132,4 +132,23 @@ void UploadTask::delUploadTask()
 
 
 }
-
+void UploadTask::clearList()
+{
+    while(m_fileList.size()>0){
+        UploadFileInfo *uploadFileInfo = m_fileList.takeAt(0);
+        if(uploadFileInfo != NULL){
+            //第一步
+            QVBoxLayout *vLayout = UploadLayout::getInstance()->getUploadLayout();
+            vLayout->removeWidget(uploadFileInfo->fdp);
+            //第二步
+            delete uploadFileInfo->fdp;
+            uploadFileInfo->fdp = NULL;
+            //第三步
+            delete uploadFileInfo;
+            uploadFileInfo = NULL;
+        }else {
+            delete uploadFileInfo;
+            uploadFileInfo = NULL;
+        }
+    }
+}

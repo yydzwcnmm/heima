@@ -219,7 +219,9 @@ void MyFileWidget::getMyFileCount(MyFileDisplay cmd)
             getMyFileList(Normal);
         }else {
             //用户文件数量等于0
-
+            //用户文件数量等于0
+            //清空用户文件item
+            refreshFileItems();
         }
 
         //立即销毁
@@ -318,23 +320,30 @@ void MyFileWidget::getMyFileList(MyFileDisplay cmd)
 
 }
 
+void MyFileWidget::addListWidgetItem(FileInfo *fileInfo)
+{
+    QString fileTypeName = QString("%1.png").arg(fileInfo->type);
+    QString fileName = m_common->getFileType(fileTypeName);
+    QString filePath = QString("%1/%2").arg(FILE_TYPE_DIR).arg(fileName);
+    qDebug() << "fileName:" << fileName;
+
+    //添加items(图片/文字)到listWidget
+    ui->listWidget->addItem(new QListWidgetItem(QIcon(filePath), fileInfo->fileName));
+}
+
 void MyFileWidget::showFileItems()
 {
 
     for(int i=0;i<m_fileList.length();i++)
     {
         FileInfo *fileInfo = m_fileList.at(i);
-        QString fileTypeName = QString("%1.png").arg(fileInfo->type);
-        QString fileTypeName2 = m_common->getFileType(fileTypeName);
-        qDebug() << "showFileItems fileTypeName2 1:" << fileTypeName2;
-        QString filePath = QString("%1/%2").arg(FILE_TYPE_DIR).arg(fileTypeName2);
-        //添加items(图片/文字)到listWidget
-        ui->listWidget->addItem(new QListWidgetItem(QIcon(filePath), fileInfo->fileName));
-        qDebug() << "filePath:" << filePath;
+        addListWidgetItem(fileInfo);
     }
     //添加上传文件图标
     this->addUploadItem();
 }
+
+
 
 void MyFileWidget::clearFileList()
 {
@@ -915,3 +924,42 @@ void MyFileWidget::downloadFilesAction()
 
 }
 
+
+void MyFileWidget::refreshFileItems()
+{
+    //清空ui->listWidget中items
+    clearItems();
+    //如果文件列表不为空，显示文件列表
+    if (!m_fileList.isEmpty()) {
+        //显示文件列表
+        int n = m_fileList.size();
+        for (int i=0; i<n; ++i) {
+            FileInfo *fileInfo = m_fileList.at(i);
+
+        }
+    }
+
+    //添加上传图标
+    this->addUploadItem();
+
+}
+
+void MyFileWidget::changeUser()
+{
+    //1. 当切换用户的时候，需要先清空m_fileList
+    //2. UploadTask,DownloadTask，上传，下载任务列表也需要清空
+    //3. 清空ui-listWidget上面的item.
+    this->clearFileList();
+    this->clearItems();
+
+}
+
+
+void MyFileWidget::clearAllTask()
+{
+    UploadTask *uploadTask = UploadTask::getInstance();
+    uploadTask->clearList();
+    DownloadTask *downloadTask = DownloadTask::getInstance();
+    downloadTask->clearList();
+
+}

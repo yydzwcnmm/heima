@@ -196,5 +196,18 @@ void DownloadTask::delDownloadTask()
 
 void DownloadTask::clearList()
 {
+    while (m_fileList.size()>0) {
+        DownloadFileInfo *downloadFileInfo = m_fileList.takeAt(0);
+        if (downloadFileInfo != NULL) {
+            //第一步
+            QVBoxLayout *vLayout = DownloadLayout::getInstance()->getDownloadLayout();
+            vLayout->removeWidget(downloadFileInfo->fdp);
 
+            //第二步
+            delete downloadFileInfo->fdp;
+
+            //第三步
+            delete downloadFileInfo;
+        }
+    }
 }

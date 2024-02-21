@@ -28,6 +28,7 @@
 #include <QTimer>
 #include "downloadtask.h"
 #include <QUrl>
+#include "uploadtask.h"
 
 namespace Ui {
 class MyFileWidget;
@@ -90,10 +91,15 @@ private:
     void uploadFile(UploadFileInfo *uploadFileInfo);
     void addDownloadFiles();
     void downloadFilesAction();
+    void refreshFileItems();
+    void addListWidgetItem(FileInfo *fileInfo);
+
+    void clearAllTask();
 
 public:
     void getMyFileCount(MyFileDisplay cmd = Normal);
     void getMyFileList(MyFileDisplay cmd = Normal);
+    void changeUser();
 
 
 };

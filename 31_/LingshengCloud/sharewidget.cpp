@@ -131,7 +131,7 @@ void ShareWidget::dealfile(QString cmd)
     //m_fileList
 
     for (int i=0; i<m_fileList.length(); i++) {
-        FileInfo *fileInfo = m_fileList.at(i);
+            fileInfo = m_fileList.at(i);
         //qDebug() << "fileInfo->fileName:" << fileInfo->fileName << "   item->text():" << item->text();
         if (fileInfo->fileName == item->text()) {
             if (cmd == "property") {
@@ -139,12 +139,13 @@ void ShareWidget::dealfile(QString cmd)
             } else if (cmd == "cancel") {
                 cancelShareFile(fileInfo);
             } else if (cmd == "save") {
-                //saveFileToMyAccount(fileInfo);
+               saveFileToMyAccount(fileInfo);
             }
 
             break;
         }
     }
+
 }
 
 void ShareWidget::showFileProperty(FileInfo *fileInfo)
@@ -546,5 +547,86 @@ void ShareWidget::dealFilePv(QString md5, QString fileName)
         reply->deleteLater();
 
     });
+
+}
+
+// 刷新listWidget列表
+void ShareWidget::refreshFileItems()
+{
+    // 清空所有item项目
+    clearItems();
+
+    int n = m_fileList.size();
+    for(int i=0; i<n; ++i) {
+        FileInfo *fileInfo = m_fileList.at(i);
+        addListWidgetItem(fileInfo);
+    }
+}
+
+//转存文件
+void ShareWidget::saveFileToMyAccount(FileInfo *fileInfo)
+{
+
+
+    QNetworkRequest request; //栈
+    QString ip = m_common->getConfValue("web_server", "ip");
+    QString port = m_common->getConfValue("web_server", "port");
+
+    //http://192.168.52.139/dealsharefile?cmd=save
+    QString url = QString("http://%1:%2/dealsharefile?cmd=save").arg(ip).arg(port);
+    request.setUrl(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
+
+/*
+{
+    "filename": "ui_buttongroup.h",
+    "md5": "a89390d867d5da18c8b1a95908d7c653",
+    "user": "King"
+}
+*/
+    QString user = LoginInfoInstance::getInstance()->user();
+
+    QJsonObject paramsObj;
+    paramsObj.insert("filename", fileInfo->fileName);
+    paramsObj.insert("md5", fileInfo->md5);
+    paramsObj.insert("user", user);
+    QJsonDocument doc(paramsObj);
+
+    QByteArray data = doc.toJson();
+    QNetworkReply *reply = m_manager->post(request, data);
+
+    qDebug() << "QNetworkReply *reply = m_manager->post(request, data);" ;
+    //读取服务器返回的数据
+    connect(reply, &QNetworkReply::readyRead, this, [=](){
+        qDebug() << "connect(reply, &QNetworkReply::readyRead,";
+        QByteArray data = reply->readAll();
+        qDebug() << "服务器返回数据:" << QString(data);
+        QString code = NetworkData::getCode(data);
+
+        /*
+        020： 成功
+        021： 文件已存在
+        022： 失败
+         */
+        if(code == "020"){
+            //成功
+            QMessageBox::information(this, "转存成功", QString("该文件已保存到【%1】文件列表中!").arg(user));
+            emit saveFile();
+        }else if(code == "021"){
+            //文件已存在
+
+            QMessageBox::warning(this, "转存失败", QString("【%1】文件列表中已存在此文件，无需转存!").arg(user));
+        }else if(code == "022"){
+            //失败
+
+            QMessageBox::warning(this, "转存失败", QString("文件转存失败!").arg(user));
+        }
+        //立即销毁
+        reply->deleteLater();
+
+
+    });
+
+
 
 }

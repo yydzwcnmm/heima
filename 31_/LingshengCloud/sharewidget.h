@@ -48,9 +48,11 @@ protected:
 signals:
     //重新登录
     void gotoTransform(TransformStatus status);
+    void saveFile();
 
 private:
 
+    FileInfo *fileInfo;
     bool m_downloadTaskisEmpty = false;
     Common *m_common;
     LoginInfoInstance *m_loginInfo;
@@ -100,7 +102,6 @@ private:
 
     void dealFilePv(QString md5, QString fileName);
     void saveFileToMyAccount(FileInfo *fileInfo);
-
 
 
 };
