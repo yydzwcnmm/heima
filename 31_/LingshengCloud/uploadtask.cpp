@@ -26,8 +26,8 @@ int UploadTask::appendUploadTask(QString filePath)
     //user=\"%1\" filename=\"%2\" md5=\"%3\" size=%4
     qint64 fileSize = QFileInfo(filePath).size();
     //判断文件的大小， 最大30M
-    if(fileSize>30*1024*1024){
-       qDebug()<<"文件太大，最大允许上传30M";
+    if(fileSize>700*1024*1024){
+       qDebug()<<"文件太大，最大允许上传700M";
         return -1;
     }
 

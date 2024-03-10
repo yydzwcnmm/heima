@@ -637,7 +637,7 @@ void MyFileWidget::addUploadFiles()
          //添加到上传任务列表
          int res = m_uploadTask->appendUploadTask(filePath);
          if(-1 == res){
-             QMessageBox::warning(this, "上传警告", "文件大小不能超过900M");
+             QMessageBox::warning(this, "上传警告", "文件大小不能超过700M");
          }
 
     }
